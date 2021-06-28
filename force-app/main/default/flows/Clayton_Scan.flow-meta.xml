@@ -65,7 +65,7 @@
         <label>Get Scan</label>
         <locationX>228</locationX>
         <locationY>622</locationY>
-        <actionName>ClaytonScan.getScan</actionName>
+        <actionName>clayton::ClaytonScan.getScan</actionName>
         <actionType>externalService</actionType>
         <connector>
             <targetReference>Is_Scan_Complete</targetReference>
@@ -99,7 +99,7 @@
         <label>Get Scan Policies</label>
         <locationX>228</locationX>
         <locationY>931</locationY>
-        <actionName>ClaytonScan.getPolicies</actionName>
+        <actionName>clayton::ClaytonScan.getPolicies</actionName>
         <actionType>externalService</actionType>
         <connector>
             <targetReference>Get_Scan_Policy_Sarif_Loop</targetReference>
@@ -130,7 +130,7 @@
         <label>Scan By Branch</label>
         <locationX>233</locationX>
         <locationY>271</locationY>
-        <actionName>ClaytonScan.scanByBranch</actionName>
+        <actionName>clayton::ClaytonScan.scanByBranch</actionName>
         <actionType>externalService</actionType>
         <connector>
             <targetReference>Assign_ScanId</targetReference>
@@ -552,7 +552,7 @@
     </variables>
     <variables>
         <name>scanByBranchForm</name>
-        <apexClass>ExternalService__ClaytonScan_ScanByBranchForm</apexClass>
+        <apexClass>ExternalService__clayton__ClaytonScan_ScanByBranchForm</apexClass>
         <dataType>Apex</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>

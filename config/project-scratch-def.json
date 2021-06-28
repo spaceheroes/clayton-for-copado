@@ -1,13 +1,13 @@
 {
-  "orgName": "andrea company",
+  "orgName": "clayton-copado-integration_DEV",
   "edition": "Developer",
-  "features": ["EnableSetPasswordInApi"],
+  "features": ["FieldAuditTrail"],
   "settings": {
     "lightningExperienceSettings": {
       "enableS1DesktopEnabled": true
     },
     "mobileSettings": {
-      "enableS1EncryptedStoragePref2": false
+      "enableS1EncryptedStoragePref2": true
     }
   }
 }
