@@ -8,7 +8,7 @@
       "versionNumber": "1.0.0.NEXT",
       "dependencies": [
         {
-            "package": "Copado Deployer@16.6.1.0"
+            "package": "Copado Deployer@17.4.0.0"
         }
     ]
     }
@@ -17,6 +17,6 @@
   "sfdcLoginUrl": "https://login.salesforce.com",
   "sourceApiVersion": "51.0",
   "packageAliases": {
-    "Copado Deployer@16.6.1.0" : "04t5p000001BlWv"
+    "Copado Deployer@17.4.0.0" : "04t5p000000YGce"
   }
 }
