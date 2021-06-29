@@ -2,6 +2,22 @@
 <ExternalServiceRegistration xmlns="http://soap.sforce.com/2006/04/metadata">
     <label>ClaytonScan</label>
     <namedCredential>Clayton</namedCredential>
+    <operations>
+        <active>true</active>
+        <name>getpolicies</name>
+    </operations>
+    <operations>
+        <active>true</active>
+        <name>getpolicy</name>
+    </operations>
+    <operations>
+        <active>true</active>
+        <name>getscan</name>
+    </operations>
+    <operations>
+        <active>true</active>
+        <name>scanbybranch</name>
+    </operations>
     <schema>{
   &quot;swagger&quot;: &quot;2.0&quot;,
   &quot;info&quot;: {
