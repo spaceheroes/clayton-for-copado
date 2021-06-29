@@ -1,22 +1,23 @@
 {
-  "packageDirectories": [
-    {
-      "path": "force-app",
-      "default": true,
-      "package": "Clayton Copado Integration",
-      "versionName": "Version 1.0",
-      "versionNumber": "1.0.0.NEXT",
-      "dependencies": [
+    "packageDirectories": [
         {
-            "package": "Copado Deployer@17.4.0.0"
+            "path": "force-app",
+            "default": true,
+            "package": "Clayton Copado Integration",
+            "versionName": "Version 1.0",
+            "versionNumber": "1.0.0.NEXT",
+            "dependencies": [
+                {
+                    "package": "Copado Deployer@17.4.0.0"
+                }
+            ]
         }
-    ]
+    ],
+    "namespace": "clayton",
+    "sfdcLoginUrl": "https://login.salesforce.com",
+    "sourceApiVersion": "51.0",
+    "packageAliases": {
+        "Copado Deployer@17.4.0.0": "04t5p000000YGce",
+        "Clayton Copado Integration": "0Ho09000000PB9pCAG"
     }
-  ],
-  "namespace": "clayton",
-  "sfdcLoginUrl": "https://login.salesforce.com",
-  "sourceApiVersion": "51.0",
-  "packageAliases": {
-    "Copado Deployer@17.4.0.0" : "04t5p000000YGce"
-  }
 }
