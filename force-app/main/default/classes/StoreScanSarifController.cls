@@ -19,6 +19,7 @@ public with sharing class StoreScanSarifController {
         insert att;
     }
 
+    @TestVisible
     public class StoreScanSarifRequest{
         
         @InvocableVariable
