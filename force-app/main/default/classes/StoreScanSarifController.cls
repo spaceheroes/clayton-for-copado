@@ -8,7 +8,7 @@ public with sharing class StoreScanSarifController {
         String path = hostnameAndPath.substringAfter('/');
         
         HttpRequest httpRequest = new HttpRequest();
-        httpRequest.setEndpoint('callout:Clayton/'+path);
+        httpRequest.setEndpoint('callout:clayton__Clayton/'+path);
         httpRequest.setMethod('GET');
         Http http = new Http();
         HttpResponse response = http.send(httpRequest);

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ExternalServiceRegistration xmlns="http://soap.sforce.com/2006/04/metadata">
     <label>ClaytonScan</label>
-    <namedCredential>Clayton</namedCredential>
+    <namedCredential>clayton_Clayton</namedCredential>
     <operations>
         <active>true</active>
         <name>getpolicies</name>

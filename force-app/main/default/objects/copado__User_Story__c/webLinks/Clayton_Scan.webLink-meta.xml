@@ -17,5 +17,5 @@
     <protected>false</protected>
     <showsLocation>false</showsLocation>
     <showsStatus>false</showsStatus>
-    <url>/flow/Clayton_Scan?User_Story_Name={!copado__User_Story__c.Name}&amp;User_Story_ID={!copado__User_Story__c.Id}</url>
+    <url>/flow/clayton/Clayton_Scan?User_Story_Name={!copado__User_Story__c.Name}&amp;User_Story_ID={!copado__User_Story__c.Id}</url>
 </WebLink>
