@@ -69,7 +69,7 @@ global class Clayton extends Auth.AuthProviderPluginClass {
 
         return new Auth.AuthProviderTokenResponse(config.get(METADATA_PROVIDER_NAME)
                                                   , tokenResponse.access_token
-                                                  , config.get(METADATA_CLIENT_SECRET)
+                                                  , tokenResponse.refresh_token
                                                   , state.queryParameters.get('state'));
      }
 
