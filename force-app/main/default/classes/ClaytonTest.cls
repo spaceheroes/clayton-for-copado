@@ -23,9 +23,6 @@ public class ClaytonTest {
     public static final String METADATA_CLIENT_ID = 'clayton__ClientId__c';
     public static final String METADATA_CLIENT_SECRET = 'clayton__ClientSecret__c';
 
-
-    // In the real world scenario, the key and value would be read 
-    // from the (custom fields in) custom metadata type record. 
     private static Map<String,String> setupAuthProviderConfig () 
     { 
         Map<String,String> authProviderConfiguration = new Map<String,String>(); 
@@ -102,34 +99,18 @@ public class ClaytonTest {
           , new Map<String,String>());
     
         System.assertNotEquals(expectedUserData,null); 
-        System.assertEquals(expectedUserData.firstName, 
-        actualUserData.firstName); 
-        System.assertEquals(expectedUserData.lastName, 
-        actualUserData.lastName); 
-        System.assertEquals(expectedUserData.fullName, 
-        actualUserData.fullName); 
-        System.assertEquals(expectedUserData.email, 
-        actualUserData.email); 
-        System.assertEquals(expectedUserData.username, 
-        actualUserData.username); 
-        System.assertEquals(expectedUserData.locale, 
-        actualUserData.locale); 
-        System.assertEquals(expectedUserData.provider, 
-        actualUserData.provider); 
-        System.assertEquals(expectedUserData.siteLoginUrl, 
-        actualUserData.siteLoginUrl); 
+        System.assertEquals(expectedUserData.firstName, actualUserData.firstName); 
+        System.assertEquals(expectedUserData.lastName, actualUserData.lastName); 
+        System.assertEquals(expectedUserData.fullName, actualUserData.fullName); 
+        System.assertEquals(expectedUserData.email, actualUserData.email); 
+        System.assertEquals(expectedUserData.username, actualUserData.username); 
+        System.assertEquals(expectedUserData.locale, actualUserData.locale); 
+        System.assertEquals(expectedUserData.provider, actualUserData.provider); 
+        System.assertEquals(expectedUserData.siteLoginUrl, actualUserData.siteLoginUrl); 
     } 
 
-    // Implement a mock http response generator for Concur. 
     public class ClaytonMockHttpResponseGenerator implements HttpCalloutMock 
     { 
-        /*
-        @JsonProperty("access_token") private String accessToken;
-        @JsonProperty("refresh_token") private String refreshToken;
-        @JsonProperty("scope") private String scope;
-        @JsonProperty("token_type") private String tokenType;
-        @JsonProperty("expires_in") private Integer expiresIn;
-        **/
 
         public HTTPResponse respond(HTTPRequest req) 
         { 
