@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>AuthorizeUrl__c</fullName>
+    <externalId>false</externalId>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <inlineHelpText>OAuth2 Authorize URL. 
+By default set to https://app.clayton.io/oauth2/authorize</inlineHelpText>
+    <label>Authorize Endpoint URL</label>
+    <required>false</required>
+    <type>Url</type>
+</CustomField>
