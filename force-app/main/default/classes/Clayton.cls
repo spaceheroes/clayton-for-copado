@@ -73,6 +73,29 @@ global class Clayton extends Auth.AuthProviderPluginClass {
                                                   , state.queryParameters.get('state'));
      }
 
+     public override Auth.OAuthRefreshResult refresh(Map<String,String> config, String refreshToken) {
+        final PageReference pageRef = new PageReference(getPropertyValue(config, METADATA_TOKEN_URL, DEFAULT_TOKEN_URL));
+        pageRef.getParameters().put('grant_type','refresh_token');
+        pageRef.getParameters().put('refresh_token',refreshToken);
+        pageRef.getParameters().put('client_id',config.get(METADATA_CLIENT_ID));
+        pageRef.getParameters().put('client_secret',config.get(METADATA_CLIENT_SECRET));
+        System.debug('Refresh Token URL ' + pageRef.getUrl());
+
+        HttpRequest req = new HttpRequest();
+        req.setEndpoint(pageRef.getUrl());
+        req.setHeader('Content-Type','application/json');
+        req.setMethod('POST');
+
+        Http http = new Http();
+        HTTPResponse res = http.send(req);
+        String responseBody = res.getBody();
+        
+        System.debug('Refresh Token Response Body: '+responseBody);
+        System.debug('Refresh Token Response Status: ' + res.getStatus() + ' ' + res.getStatusCode());
+        final TokenResponse tokenResponse = deserializeToken(responseBody);
+
+        return new Auth.OAuthRefreshResult(tokenResponse.access_token, tokenResponse.refresh_token);
+    }
 
       global Auth.UserData  getUserInfo(Map<string,string> config, Auth.AuthProviderTokenResponse response) { 
         final Auth.UserData userData = new Auth.UserData(

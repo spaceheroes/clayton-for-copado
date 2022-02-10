@@ -14,7 +14,7 @@ public class ClaytonTest {
     private static final String CALLBACK_URL = 'http://localhost/services/authcallback/orgId/Clayton'; 
     private static final String API_USER_URL = 'www.concursolutions.com/user/api'; 
 
-
+    public static final String METADATA_OBJ = 'clayton__Clayton_OAuth__mdt'; 
     public static final String METADATA_PROVIDER_NAME = 'clayton__ProviderName__c';
     public static final String METADATA_AUTHORIZE_URL = 'clayton__AuthorizeUrl__c	';
     public static final String METADATA_TOKEN_URL = 'clayton__TokenUrl__c';
@@ -37,6 +37,14 @@ public class ClaytonTest {
     
     } 
     
+    @isTest
+    public static void testGetCustomMetadataType() 
+    { 
+        Clayton claytonProviderAuth = new Clayton(); 
+
+        System.assertEquals(METADATA_OBJ, claytonProviderAuth.getCustomMetadataType()); 
+    } 
+
     @isTest
     public static void testInitiateMethod() 
     { 
@@ -74,6 +82,22 @@ public class ClaytonTest {
         System.assertEquals(expectedAuthProvResponse.oauthToken, actualAuthProvResponse.oauthToken); 
         System.assertEquals(expectedAuthProvResponse.oauthSecretOrRefreshToken, actualAuthProvResponse.oauthSecretOrRefreshToken); 
         System.assertEquals(expectedAuthProvResponse.state, actualAuthProvResponse.state); 
+
+    } 
+
+    @isTest
+    public static void testRefresh() 
+    { 
+        Map<String,String> authProviderConfiguration = setupAuthProviderConfig(); 
+        Clayton claytonProviderAuth = new Clayton(); 
+
+        Test.setMock(HttpCalloutMock.class, new ClaytonMockHttpResponseGenerator()); 
+
+        Auth.OAuthRefreshResult actualAuthRefreshResponse = claytonProviderAuth.refresh(authProviderConfiguration, REFRESH_TOKEN); 
+        Auth.OAuthRefreshResult expectedAuthRefreshResponse  = new Auth.OAuthRefreshResult(OAUTH_TOKEN, REFRESH_TOKEN);
+
+        System.assertEquals(expectedAuthRefreshResponse.accessToken, actualAuthRefreshResponse.accessToken); 
+        System.assertEquals(expectedAuthRefreshResponse.refreshToken, actualAuthRefreshResponse.refreshToken); 
 
     } 
 
