@@ -99,8 +99,8 @@
     <actionCalls>
         <name>Store_Global_Scan_Sarif</name>
         <label>Store Global Scan Sarif</label>
-        <locationX>390</locationX>
-        <locationY>1223</locationY>
+        <locationX>386</locationX>
+        <locationY>1318</locationY>
         <actionName>StoreScanSarifController</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -283,8 +283,8 @@
     <loops>
         <name>Get_Scan_Policy_Sarif_Loop</name>
         <label>Loop Over Scan Policies</label>
-        <locationX>389</locationX>
-        <locationY>932</locationY>
+        <locationX>390</locationX>
+        <locationY>931</locationY>
         <collectionReference>GetScanPolicies.200</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -396,7 +396,7 @@
         <inputAssignments>
             <field>copado__Start_Time__c</field>
             <value>
-                <elementReference>$System.OriginDateTime</elementReference>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -464,8 +464,8 @@
     <recordUpdates>
         <name>Update_Global_Report</name>
         <label>Update Global Report</label>
-        <locationX>391</locationX>
-        <locationY>1379</locationY>
+        <locationX>389</locationX>
+        <locationY>1477</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -474,6 +474,12 @@
                 <elementReference>Global_Result_Record_Id</elementReference>
             </value>
         </filters>
+        <inputAssignments>
+            <field>copado__End_Time__c</field>
+            <value>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <field>copado__Link__c</field>
             <value>
@@ -505,6 +511,12 @@
             </value>
         </filters>
         <inputAssignments>
+            <field>copado__End_Time__c</field>
+            <value>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>copado__Status__c</field>
             <value>
                 <elementReference>Get_Scan_Policy_Result</elementReference>
@@ -519,7 +531,7 @@
             <targetReference>Assign_Scan_By_Branch_Input</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <variables>
         <name>Global_Result_Record_Id</name>
         <dataType>String</dataType>
@@ -613,7 +625,7 @@
     <waits>
         <name>Wait_Arbitrary_Time_0</name>
         <label>Wait Arbitrary Time</label>
-        <locationX>724</locationX>
+        <locationX>740</locationX>
         <locationY>1024</locationY>
         <defaultConnectorLabel>Default Path</defaultConnectorLabel>
         <waitEvents>
@@ -644,8 +656,8 @@
     <waits>
         <name>Wait_Arbitrary_Time_0_0</name>
         <label>Wait Arbitrary Time</label>
-        <locationX>392</locationX>
-        <locationY>1051</locationY>
+        <locationX>390</locationX>
+        <locationY>1136</locationY>
         <defaultConnectorLabel>Default Path</defaultConnectorLabel>
         <waitEvents>
             <name>Get_Resume_Time_from_Formula_0_0</name>
