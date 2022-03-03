@@ -1,66 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
-        <name>Attach_Global_Sarif</name>
-        <label>Attach Global Sarif</label>
-        <locationX>389</locationX>
-        <locationY>1198</locationY>
-        <actionName>StoreScanSarifController</actionName>
-        <actionType>apex</actionType>
-        <connector>
-            <targetReference>Update_Global_Report</targetReference>
-        </connector>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
-        <inputParameters>
-            <name>recordId</name>
-            <value>
-                <elementReference>Global_Result_Record_Id</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>sarifUrl</name>
-            <value>
-                <elementReference>GetScan.200.sarifx5furl</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>title</name>
-            <value>
-                <stringValue>Global Scan</stringValue>
-            </value>
-        </inputParameters>
-    </actionCalls>
-    <actionCalls>
-        <name>Attach_Scan_Policy_Sarif</name>
-        <label>Attach Scan Policy Sarif</label>
-        <locationX>909</locationX>
-        <locationY>979</locationY>
-        <actionName>StoreScanSarifController</actionName>
-        <actionType>apex</actionType>
-        <connector>
-            <targetReference>Update_Scan_Policy_Record</targetReference>
-        </connector>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
-        <inputParameters>
-            <name>recordId</name>
-            <value>
-                <elementReference>Scan_Policy_Result_ID</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>sarifUrl</name>
-            <value>
-                <elementReference>Get_Scan_Policy_Sarif_Loop.sarifx5furl</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>title</name>
-            <value>
-                <elementReference>Get_Scan_Policy_Sarif_Loop.title</elementReference>
-            </value>
-        </inputParameters>
-    </actionCalls>
-    <actionCalls>
         <name>GetScan</name>
         <label>Get Scan</label>
         <locationX>228</locationX>
@@ -156,6 +96,66 @@
         </inputParameters>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
+    <actionCalls>
+        <name>Store_Global_Scan_Sarif</name>
+        <label>Store Global Scan Sarif</label>
+        <locationX>390</locationX>
+        <locationY>1223</locationY>
+        <actionName>StoreScanSarifController</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Update_Global_Report</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>recordId</name>
+            <value>
+                <elementReference>Global_Result_Record_Id</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>sarifUrl</name>
+            <value>
+                <elementReference>GetScan.200.sarifx5furl</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>title</name>
+            <value>
+                <stringValue>Global Result</stringValue>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <actionCalls>
+        <name>Store_Scan_Policy_Sarif</name>
+        <label>Store Scan Policy Sarif</label>
+        <locationX>903</locationX>
+        <locationY>1026</locationY>
+        <actionName>StoreScanSarifController</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Update_Scan_Policy_Record</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>recordId</name>
+            <value>
+                <elementReference>Scan_Policy_Result_ID</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>sarifUrl</name>
+            <value>
+                <elementReference>Get_Scan_Policy_Sarif_Loop.sarifx5furl</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>title</name>
+            <value>
+                <elementReference>Get_Scan_Policy_Sarif_Loop.title</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
     <apiVersion>51.0</apiVersion>
     <assignments>
         <name>Assign_Scan_By_Branch_Input</name>
@@ -246,7 +246,7 @@
     <formulas>
         <name>AccountId</name>
         <dataType>String</dataType>
-        <expression>{!$Setup.ClaytonSettings__c.AccountId__c}</expression>
+        <expression>{!$Setup.clayton__ClaytonSettings__c.clayton__AccountId__c}</expression>
     </formulas>
     <formulas>
         <name>BranchName</name>
@@ -271,7 +271,7 @@
     <formulas>
         <name>ProjectId</name>
         <dataType>String</dataType>
-        <expression>{!$Setup.ClaytonSettings__c.ProjectId__c}</expression>
+        <expression>{!$Setup.clayton__ClaytonSettings__c.clayton__ProjectId__c}</expression>
     </formulas>
     <formulas>
         <name>SalesforceOrgUrl</name>
@@ -343,7 +343,7 @@
         <inputAssignments>
             <field>copado__Start_Time__c</field>
             <value>
-                <elementReference>$System.OriginDateTime</elementReference>
+                <elementReference>$Flow.InterviewStartTime</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -363,8 +363,8 @@
     <recordCreates>
         <name>Create_Scan_Policy_Result</name>
         <label>Create Scan Policy Result</label>
-        <locationX>570</locationX>
-        <locationY>965</locationY>
+        <locationX>590</locationX>
+        <locationY>1025</locationY>
         <assignRecordIdToReference>Scan_Policy_Result_ID</assignRecordIdToReference>
         <connector>
             <targetReference>Wait_Arbitrary_Time_0</targetReference>
@@ -464,8 +464,8 @@
     <recordUpdates>
         <name>Update_Global_Report</name>
         <label>Update Global Report</label>
-        <locationX>388</locationX>
-        <locationY>1334</locationY>
+        <locationX>391</locationX>
+        <locationY>1379</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -613,14 +613,14 @@
     <waits>
         <name>Wait_Arbitrary_Time_0</name>
         <label>Wait Arbitrary Time</label>
-        <locationX>713</locationX>
-        <locationY>986</locationY>
+        <locationX>724</locationX>
+        <locationY>1024</locationY>
         <defaultConnectorLabel>Default Path</defaultConnectorLabel>
         <waitEvents>
             <name>Get_Resume_Time_from_Formula_0</name>
             <conditionLogic>and</conditionLogic>
             <connector>
-                <targetReference>Attach_Scan_Policy_Sarif</targetReference>
+                <targetReference>Store_Scan_Policy_Sarif</targetReference>
             </connector>
             <eventType>AlarmEvent</eventType>
             <inputParameters>
@@ -651,7 +651,7 @@
             <name>Get_Resume_Time_from_Formula_0_0</name>
             <conditionLogic>and</conditionLogic>
             <connector>
-                <targetReference>Attach_Global_Sarif</targetReference>
+                <targetReference>Store_Global_Scan_Sarif</targetReference>
             </connector>
             <eventType>AlarmEvent</eventType>
             <inputParameters>
