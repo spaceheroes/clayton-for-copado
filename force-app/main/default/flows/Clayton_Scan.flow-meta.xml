@@ -52,6 +52,18 @@
             </value>
         </inputParameters>
         <inputParameters>
+            <name>page</name>
+            <value>
+                <numberValue>0.0</numberValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>pageable</name>
+            <value>
+                <stringValue>0</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
             <name>project</name>
             <value>
                 <elementReference>ProjectId</elementReference>
@@ -61,6 +73,12 @@
             <name>scan</name>
             <value>
                 <elementReference>scanId</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>size</name>
+            <value>
+                <numberValue>50.0</numberValue>
             </value>
         </inputParameters>
         <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -285,7 +303,7 @@
         <label>Loop Over Scan Policies</label>
         <locationX>390</locationX>
         <locationY>931</locationY>
-        <collectionReference>GetScanPolicies.200</collectionReference>
+        <collectionReference>GetScanPolicies.200.content</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
             <targetReference>Create_Scan_Policy_Result</targetReference>
@@ -531,7 +549,7 @@
             <targetReference>Assign_Scan_By_Branch_Input</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <variables>
         <name>Global_Result_Record_Id</name>
         <dataType>String</dataType>

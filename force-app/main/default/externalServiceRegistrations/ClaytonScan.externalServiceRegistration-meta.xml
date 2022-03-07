@@ -146,11 +146,13 @@
     },
     &quot;/api/workspaces/{account}/projects/{project}/scans/{scan}/policies&quot;: {
       &quot;get&quot;: {
+        &quot;description&quot;: &quot;Get filtered and ordered paginated list of scan policies&quot;,
+        &quot;summary&quot;: &quot;getPolicies&quot;,
         &quot;tags&quot;: [
           &quot;scan-policy-controller&quot;
         ],
-        &quot;summary&quot;: &quot;getPolicies&quot;,
         &quot;operationId&quot;: &quot;getPolicies&quot;,
+        &quot;deprecated&quot;: false,
         &quot;produces&quot;: [
           &quot;application/json&quot;
         ],
@@ -158,43 +160,137 @@
           {
             &quot;name&quot;: &quot;account&quot;,
             &quot;in&quot;: &quot;path&quot;,
-            &quot;description&quot;: &quot;account&quot;,
             &quot;required&quot;: true,
-            &quot;type&quot;: &quot;string&quot;
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;description&quot;: &quot;&quot;
           },
           {
             &quot;name&quot;: &quot;project&quot;,
             &quot;in&quot;: &quot;path&quot;,
-            &quot;description&quot;: &quot;project&quot;,
             &quot;required&quot;: true,
-            &quot;type&quot;: &quot;string&quot;
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;description&quot;: &quot;&quot;
           },
           {
             &quot;name&quot;: &quot;scan&quot;,
             &quot;in&quot;: &quot;path&quot;,
-            &quot;description&quot;: &quot;scan&quot;,
             &quot;required&quot;: true,
-            &quot;type&quot;: &quot;string&quot;
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;description&quot;: &quot;&quot;
+          },
+          {
+            &quot;name&quot;: &quot;search&quot;,
+            &quot;in&quot;: &quot;query&quot;,
+            &quot;required&quot;: false,
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;description&quot;: &quot;Filters list by given search string. We perform an insensitive LIKE operation over: policy name, policy description&quot;
+          },
+          {
+            &quot;name&quot;: &quot;pageable&quot;,
+            &quot;in&quot;: &quot;query&quot;,
+            &quot;required&quot;: true,
+            &quot;type&quot;: &quot;string&quot;,
+            &quot;description&quot;: &quot;&quot;
+          },
+          {
+            &quot;name&quot;: &quot;page&quot;,
+            &quot;in&quot;: &quot;query&quot;,
+            &quot;required&quot;: false,
+            &quot;default&quot;: 0,
+            &quot;type&quot;: &quot;integer&quot;,
+            &quot;format&quot;: &quot;int32&quot;,
+            &quot;description&quot;: &quot;Zero-based page index (0..N)&quot;
+          },
+          {
+            &quot;name&quot;: &quot;size&quot;,
+            &quot;in&quot;: &quot;query&quot;,
+            &quot;required&quot;: false,
+            &quot;default&quot;: 20,
+            &quot;type&quot;: &quot;integer&quot;,
+            &quot;format&quot;: &quot;int32&quot;,
+            &quot;description&quot;: &quot;The size of the page to be returned&quot;
+          },
+          {
+            &quot;name&quot;: &quot;sort&quot;,
+            &quot;in&quot;: &quot;query&quot;,
+            &quot;required&quot;: false,
+            &quot;type&quot;: &quot;array&quot;,
+            &quot;items&quot;: {
+              &quot;type&quot;: &quot;string&quot;
+            },
+            &quot;description&quot;: &quot;Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.&quot;
           }
         ],
         &quot;responses&quot;: {
+          &quot;405&quot;: {
+            &quot;description&quot;: &quot;Method Not Allowed&quot;,
+            &quot;schema&quot;: {
+              &quot;$ref&quot;: &quot;#/definitions/Error&quot;
+            },
+            &quot;headers&quot;: {}
+          },
+          &quot;403&quot;: {
+            &quot;description&quot;: &quot;Forbidden&quot;,
+            &quot;schema&quot;: {
+              &quot;$ref&quot;: &quot;#/definitions/Error&quot;
+            },
+            &quot;headers&quot;: {}
+          },
+          &quot;429&quot;: {
+            &quot;description&quot;: &quot;Too Many Requests&quot;,
+            &quot;schema&quot;: {
+              &quot;$ref&quot;: &quot;#/definitions/Error&quot;
+            },
+            &quot;headers&quot;: {}
+          },
+          &quot;402&quot;: {
+            &quot;description&quot;: &quot;Payment Required&quot;,
+            &quot;schema&quot;: {
+              &quot;$ref&quot;: &quot;#/definitions/Error&quot;
+            },
+            &quot;headers&quot;: {}
+          },
+          &quot;401&quot;: {
+            &quot;description&quot;: &quot;Unauthorized&quot;,
+            &quot;schema&quot;: {
+              &quot;$ref&quot;: &quot;#/definitions/Error&quot;
+            },
+            &quot;headers&quot;: {}
+          },
+          &quot;400&quot;: {
+            &quot;description&quot;: &quot;Bad Request&quot;,
+            &quot;schema&quot;: {
+              &quot;$ref&quot;: &quot;#/definitions/Error&quot;
+            },
+            &quot;headers&quot;: {}
+          },
+          &quot;500&quot;: {
+            &quot;description&quot;: &quot;Internal Server Error&quot;,
+            &quot;schema&quot;: {
+              &quot;$ref&quot;: &quot;#/definitions/Error&quot;
+            },
+            &quot;headers&quot;: {}
+          },
+          &quot;503&quot;: {
+            &quot;description&quot;: &quot;Service Unavailable&quot;,
+            &quot;schema&quot;: {
+              &quot;$ref&quot;: &quot;#/definitions/Error&quot;
+            },
+            &quot;headers&quot;: {}
+          },
+          &quot;406&quot;: {
+            &quot;description&quot;: &quot;Not Acceptable&quot;,
+            &quot;schema&quot;: {
+              &quot;$ref&quot;: &quot;#/definitions/Error&quot;
+            },
+            &quot;headers&quot;: {}
+          },
           &quot;200&quot;: {
             &quot;description&quot;: &quot;OK&quot;,
             &quot;schema&quot;: {
-              &quot;type&quot;: &quot;array&quot;,
-              &quot;items&quot;: {
-                &quot;$ref&quot;: &quot;#/definitions/ScanPolicyResource&quot;
-              }
-            }
-          },
-          &quot;401&quot;: {
-            &quot;description&quot;: &quot;Unauthorized&quot;
-          },
-          &quot;403&quot;: {
-            &quot;description&quot;: &quot;Forbidden&quot;
-          },
-          &quot;404&quot;: {
-            &quot;description&quot;: &quot;Not Found&quot;
+              &quot;$ref&quot;: &quot;#/definitions/PageScanPolicy&quot;
+            },
+            &quot;headers&quot;: {}
           }
         }
       }
@@ -441,52 +537,151 @@
         }
       }
     },
-    &quot;ScanPolicyResource&quot;: {
+    &quot;PageScanPolicy&quot;: {
+      &quot;title&quot;: &quot;PageScanPolicy&quot;,
       &quot;type&quot;: &quot;object&quot;,
-      &quot;required&quot;: [
-        &quot;definition&quot;,
-        &quot;html_url&quot;,
-        &quot;id&quot;,
-        &quot;metrics&quot;,
-        &quot;result&quot;,
-        &quot;status_check&quot;,
-        &quot;title&quot;
-      ],
       &quot;properties&quot;: {
-        &quot;definition&quot;: {
-          &quot;$ref&quot;: &quot;#/definitions/PolicyDefinitionResource&quot;
+        &quot;total_pages&quot;: {
+          &quot;type&quot;: &quot;integer&quot;,
+          &quot;format&quot;: &quot;int32&quot;
         },
-        &quot;html_url&quot;: {
-          &quot;type&quot;: &quot;string&quot;
+        &quot;total_elements&quot;: {
+          &quot;type&quot;: &quot;integer&quot;,
+          &quot;format&quot;: &quot;int64&quot;
         },
+        &quot;pageable&quot;: {
+          &quot;$ref&quot;: &quot;#/definitions/PageableObject&quot;
+        },
+        &quot;sort&quot;: {
+          &quot;$ref&quot;: &quot;#/definitions/Sort&quot;
+        },
+        &quot;first&quot;: {
+          &quot;type&quot;: &quot;boolean&quot;
+        },
+        &quot;last&quot;: {
+          &quot;type&quot;: &quot;boolean&quot;
+        },
+        &quot;number&quot;: {
+          &quot;type&quot;: &quot;integer&quot;,
+          &quot;format&quot;: &quot;int32&quot;
+        },
+        &quot;number_of_elements&quot;: {
+          &quot;type&quot;: &quot;integer&quot;,
+          &quot;format&quot;: &quot;int32&quot;
+        },
+        &quot;size&quot;: {
+          &quot;type&quot;: &quot;integer&quot;,
+          &quot;format&quot;: &quot;int32&quot;
+        },
+        &quot;content&quot;: {
+          &quot;type&quot;: &quot;array&quot;,
+          &quot;items&quot;: {
+            &quot;$ref&quot;: &quot;#/definitions/ScanPolicyResource&quot;
+          }
+        },
+        &quot;empty&quot;: {
+          &quot;type&quot;: &quot;boolean&quot;
+        }
+      }
+    },
+    &quot;PageableObject&quot;: {
+      &quot;title&quot;: &quot;PageableObject&quot;,
+      &quot;type&quot;: &quot;object&quot;,
+      &quot;properties&quot;: {
+        &quot;page_number&quot;: {
+          &quot;type&quot;: &quot;integer&quot;,
+          &quot;format&quot;: &quot;int32&quot;
+        },
+        &quot;page_size&quot;: {
+          &quot;type&quot;: &quot;integer&quot;,
+          &quot;format&quot;: &quot;int32&quot;
+        },
+        &quot;sort&quot;: {
+          &quot;$ref&quot;: &quot;#/definitions/Sort&quot;
+        },
+        &quot;paged&quot;: {
+          &quot;type&quot;: &quot;boolean&quot;
+        },
+        &quot;unpaged&quot;: {
+          &quot;type&quot;: &quot;boolean&quot;
+        },
+        &quot;offset&quot;: {
+          &quot;type&quot;: &quot;integer&quot;,
+          &quot;format&quot;: &quot;int64&quot;
+        }
+      }
+    },
+    &quot;Sort&quot;: {
+      &quot;title&quot;: &quot;Sort&quot;,
+      &quot;type&quot;: &quot;object&quot;,
+      &quot;properties&quot;: {
+        &quot;sorted&quot;: {
+          &quot;type&quot;: &quot;boolean&quot;
+        },
+        &quot;unsorted&quot;: {
+          &quot;type&quot;: &quot;boolean&quot;
+        },
+        &quot;empty&quot;: {
+          &quot;type&quot;: &quot;boolean&quot;
+        }
+      }
+    },
+    &quot;ScanPolicyResource&quot;: {
+      &quot;title&quot;: &quot;ScanPolicy&quot;,
+      &quot;type&quot;: &quot;object&quot;,
+      &quot;properties&quot;: {
         &quot;id&quot;: {
           &quot;type&quot;: &quot;string&quot;,
           &quot;format&quot;: &quot;uuid&quot;
         },
+        &quot;title&quot;: {
+          &quot;type&quot;: &quot;string&quot;
+        },
+        &quot;html_url&quot;: {
+          &quot;type&quot;: &quot;string&quot;
+        },
+        &quot;definition&quot;: {
+          &quot;$ref&quot;: &quot;#/definitions/PolicyDefinitionResource&quot;
+        },
         &quot;metrics&quot;: {
-          &quot;$ref&quot;: &quot;#/definitions/PolicyMetricsResource&quot;
+          &quot;$ref&quot;: &quot;#/definitions/ScanMetricsResource&quot;
         },
         &quot;result&quot;: {
-          &quot;type&quot;: &quot;string&quot;,
-          &quot;enum&quot;: [
-            &quot;NOT_PASSED&quot;,
-            &quot;PASSED&quot;,
-            &quot;PASSED_WITH_WARNINGS&quot;
-          ]
+          &quot;$ref&quot;: &quot;#/definitions/Result&quot;
+        },
+        &quot;status_check&quot;: {
+          &quot;$ref&quot;: &quot;#/definitions/StatusCheck&quot;
         },
         &quot;sarif_url&quot;: {
           &quot;type&quot;: &quot;string&quot;
         },
-        &quot;status_check&quot;: {
+        &quot;rules&quot;: {
+          &quot;type&quot;: &quot;array&quot;,
+          &quot;items&quot;: {
+            &quot;$ref&quot;: &quot;#/definitions/ScanPolicyRuleLite&quot;
+          },
+          &quot;uniqueItems&quot;: true
+        }
+      }
+    },
+    &quot;ScanPolicyRuleLite&quot;: {
+      &quot;title&quot;: &quot;ScanPolicyRuleLite&quot;,
+      &quot;type&quot;: &quot;object&quot;,
+      &quot;properties&quot;: {
+        &quot;id&quot;: {
           &quot;type&quot;: &quot;string&quot;,
-          &quot;enum&quot;: [
-            &quot;ERROR&quot;,
-            &quot;NOT_PASSED&quot;,
-            &quot;PASSED&quot;,
-            &quot;PENDING&quot;
-          ]
+          &quot;format&quot;: &quot;uuid&quot;
         },
-        &quot;title&quot;: {
+        &quot;rule_name&quot;: {
+          &quot;type&quot;: &quot;string&quot;
+        },
+        &quot;result&quot;: {
+          &quot;$ref&quot;: &quot;#/definitions/Result&quot;
+        },
+        &quot;status_check&quot;: {
+          &quot;$ref&quot;: &quot;#/definitions/StatusCheck&quot;
+        },
+        &quot;sarif_url&quot;: {
           &quot;type&quot;: &quot;string&quot;
         }
       }
@@ -722,6 +917,42 @@
           ]
         }
       }
+    },
+    &quot;Error&quot;: {
+      &quot;title&quot;: &quot;Error&quot;,
+      &quot;type&quot;: &quot;object&quot;,
+      &quot;properties&quot;: {
+        &quot;message&quot;: {
+          &quot;type&quot;: &quot;string&quot;
+        },
+        &quot;attributes&quot;: {
+          &quot;type&quot;: &quot;object&quot;,
+          &quot;additionalProperties&quot;: {
+            &quot;type&quot;: &quot;string&quot;
+          }
+        }
+      }
+    },
+    &quot;Result&quot;: {
+      &quot;title&quot;: &quot;Result&quot;,
+      &quot;example&quot;: &quot;PASSED&quot;,
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;enum&quot;: [
+        &quot;PASSED&quot;,
+        &quot;PASSED_WITH_WARNINGS&quot;,
+        &quot;NOT_PASSED&quot;
+      ]
+    },
+    &quot;StatusCheck&quot;: {
+      &quot;title&quot;: &quot;StatusCheck&quot;,
+      &quot;example&quot;: &quot;PENDING&quot;,
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;enum&quot;: [
+        &quot;PENDING&quot;,
+        &quot;PASSED&quot;,
+        &quot;NOT_PASSED&quot;,
+        &quot;ERROR&quot;
+      ]
     },
     &quot;ScanStats&quot;: {
       &quot;type&quot;: &quot;object&quot;,
