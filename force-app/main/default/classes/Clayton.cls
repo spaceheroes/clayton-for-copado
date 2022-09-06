@@ -5,7 +5,7 @@ global class Clayton extends Auth.AuthProviderPluginClass {
     public static final String METADATA_OBJ = 'clayton__Clayton_OAuth__mdt'; 
 
     public static final String METADATA_PROVIDER_NAME = 'clayton__ProviderName__c';
-    public static final String METADATA_AUTHORIZE_URL = 'clayton__AuthorizeUrl__c	';
+    public static final String METADATA_AUTHORIZE_URL = 'clayton__AuthorizeUrl__c';
     public static final String METADATA_TOKEN_URL = 'clayton__TokenUrl__c';
     public static final String METADATA_CALLBACK_URL = 'clayton__CallbackUrl__c';
     public static final String METADATA_SCOPE = 'clayton__Scope__c';
@@ -27,7 +27,6 @@ global class Clayton extends Auth.AuthProviderPluginClass {
 
     private String getPropertyValue(Map<string,string> config, String propertyName, String defaultValue) {
         final String propertyValue = config.get(propertyName);
-
         return String.isEmpty(propertyValue) ? defaultValue : propertyValue;
     }
 
@@ -38,7 +37,7 @@ global class Clayton extends Auth.AuthProviderPluginClass {
         pageRef.getParameters().put('scope',config.get(METADATA_SCOPE));
         pageRef.getParameters().put('redirect_uri',getCallbackUrl(config));
         pageRef.getParameters().put('state',stateToPropagate);
-        System.debug('Callback URL with parameters ' + pageRef.getUrl());
+        System.debug('Authorize URL with parameters ' + pageRef.getUrl());
         return pageRef;
      }
 
