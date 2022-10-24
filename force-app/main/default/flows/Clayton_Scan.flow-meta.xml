@@ -274,7 +274,7 @@
     <formulas>
         <name>Check_Git_Snapshot_Status_Resume_Time</name>
         <dataType>DateTime</dataType>
-        <expression>{!$Flow.CurrentDateTime} + 0.1 / (24 * 60)</expression>
+        <expression>{!$Flow.CurrentDateTime} + {!WaitingTimeMinutes} / (24 * 60)</expression>
     </formulas>
     <formulas>
         <name>Get_Global_Scan_Result</name>
@@ -295,6 +295,17 @@
         <name>SalesforceOrgUrl</name>
         <dataType>String</dataType>
         <expression>LEFT({!$Api.Partner_Server_URL_340}, FIND( &apos;/services&apos;, {!$Api.Partner_Server_URL_340}))</expression>
+    </formulas>
+    <formulas>
+        <name>Waiting_Time_Before_Sarif_Download</name>
+        <dataType>DateTime</dataType>
+        <expression>{!$Flow.CurrentDateTime} + 1 / (24 * 60)</expression>
+    </formulas>
+    <formulas>
+        <name>WaitingTimeMinutes</name>
+        <dataType>Number</dataType>
+        <expression>{!$Setup.clayton__ClaytonSettings__c.clayton__WaitingTimeMinutes__c}</expression>
+        <scale>0</scale>
     </formulas>
     <interviewLabel>Clayton Scan {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Clayton Scan</label>
@@ -636,6 +647,9 @@
             </inputParameters>
             <inputParameters>
                 <name>TimeOffsetUnit</name>
+                <value>
+                    <stringValue>Hours</stringValue>
+                </value>
             </inputParameters>
             <label>Get Resume Time from Formula</label>
         </waitEvents>
@@ -656,7 +670,7 @@
             <inputParameters>
                 <name>AlarmTime</name>
                 <value>
-                    <elementReference>Check_Git_Snapshot_Status_Resume_Time</elementReference>
+                    <elementReference>Waiting_Time_Before_Sarif_Download</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -667,6 +681,9 @@
             </inputParameters>
             <inputParameters>
                 <name>TimeOffsetUnit</name>
+                <value>
+                    <stringValue>Hours</stringValue>
+                </value>
             </inputParameters>
             <label>Get Resume Time from Formula</label>
         </waitEvents>
@@ -687,7 +704,7 @@
             <inputParameters>
                 <name>AlarmTime</name>
                 <value>
-                    <elementReference>Check_Git_Snapshot_Status_Resume_Time</elementReference>
+                    <elementReference>Waiting_Time_Before_Sarif_Download</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -698,6 +715,9 @@
             </inputParameters>
             <inputParameters>
                 <name>TimeOffsetUnit</name>
+                <value>
+                    <stringValue>Hours</stringValue>
+                </value>
             </inputParameters>
             <label>Get Resume Time from Formula</label>
         </waitEvents>
