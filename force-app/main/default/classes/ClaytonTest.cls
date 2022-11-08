@@ -42,7 +42,7 @@ public class ClaytonTest {
     { 
         Clayton claytonProviderAuth = new Clayton(); 
 
-        System.assertEquals(METADATA_OBJ, claytonProviderAuth.getCustomMetadataType()); 
+        System.assertEquals(METADATA_OBJ, claytonProviderAuth.getCustomMetadataType(), 'Metadata types do not match'); 
     } 
 
     @isTest
@@ -60,7 +60,7 @@ public class ClaytonTest {
         expectedUrl.getParameters().put('state',STATE_TO_PROPOGATE);
 
         PageReference actualUrl = claytonProviderAuth.initiate(authProviderConfiguration, STATE_TO_PROPOGATE); 
-        System.assertEquals(expectedUrl.getUrl(), actualUrl.getUrl());
+        System.assertEquals(expectedUrl.getUrl(), actualUrl.getUrl(), 'Url does not match');
     } 
 
     @isTest
@@ -78,10 +78,10 @@ public class ClaytonTest {
         Auth.AuthProviderTokenResponse actualAuthProvResponse = claytonProviderAuth.handleCallback(authProviderConfiguration, cbState); 
         Auth.AuthProviderTokenResponse expectedAuthProvResponse = new Auth.AuthProviderTokenResponse('Clayton', OAUTH_TOKEN, REFRESH_TOKEN, STATE_TO_PROPOGATE); 
     
-        System.assertEquals(expectedAuthProvResponse.provider, actualAuthProvResponse.provider); 
-        System.assertEquals(expectedAuthProvResponse.oauthToken, actualAuthProvResponse.oauthToken); 
-        System.assertEquals(expectedAuthProvResponse.oauthSecretOrRefreshToken, actualAuthProvResponse.oauthSecretOrRefreshToken); 
-        System.assertEquals(expectedAuthProvResponse.state, actualAuthProvResponse.state); 
+        System.assertEquals(expectedAuthProvResponse.provider, actualAuthProvResponse.provider, 'Provider does not match'); 
+        System.assertEquals(expectedAuthProvResponse.oauthToken, actualAuthProvResponse.oauthToken, 'OAuth Token does not match'); 
+        System.assertEquals(expectedAuthProvResponse.oauthSecretOrRefreshToken, actualAuthProvResponse.oauthSecretOrRefreshToken, 'OAuth Secret or Refresh Token do not match'); 
+        System.assertEquals(expectedAuthProvResponse.state, actualAuthProvResponse.state, 'State does not match'); 
 
     } 
 
@@ -96,8 +96,8 @@ public class ClaytonTest {
         Auth.OAuthRefreshResult actualAuthRefreshResponse = claytonProviderAuth.refresh(authProviderConfiguration, REFRESH_TOKEN); 
         Auth.OAuthRefreshResult expectedAuthRefreshResponse  = new Auth.OAuthRefreshResult(OAUTH_TOKEN, REFRESH_TOKEN);
 
-        System.assertEquals(expectedAuthRefreshResponse.accessToken, actualAuthRefreshResponse.accessToken); 
-        System.assertEquals(expectedAuthRefreshResponse.refreshToken, actualAuthRefreshResponse.refreshToken); 
+        System.assertEquals(expectedAuthRefreshResponse.accessToken, actualAuthRefreshResponse.accessToken, 'Access token does not match'); 
+        System.assertEquals(expectedAuthRefreshResponse.refreshToken, actualAuthRefreshResponse.refreshToken, 'Refresh token does not match'); 
 
     } 
 
@@ -122,15 +122,15 @@ public class ClaytonTest {
           , null // siteLoginUrl
           , new Map<String,String>());
     
-        System.assertNotEquals(expectedUserData,null); 
-        System.assertEquals(expectedUserData.firstName, actualUserData.firstName); 
-        System.assertEquals(expectedUserData.lastName, actualUserData.lastName); 
-        System.assertEquals(expectedUserData.fullName, actualUserData.fullName); 
-        System.assertEquals(expectedUserData.email, actualUserData.email); 
-        System.assertEquals(expectedUserData.username, actualUserData.username); 
-        System.assertEquals(expectedUserData.locale, actualUserData.locale); 
-        System.assertEquals(expectedUserData.provider, actualUserData.provider); 
-        System.assertEquals(expectedUserData.siteLoginUrl, actualUserData.siteLoginUrl); 
+        System.assertNotEquals(expectedUserData,null, 'User data is null'); 
+        System.assertEquals(expectedUserData.firstName, actualUserData.firstName, 'FirstName does not match'); 
+        System.assertEquals(expectedUserData.lastName, actualUserData.lastName, 'LastName does not match'); 
+        System.assertEquals(expectedUserData.fullName, actualUserData.fullName, 'FullName does not match'); 
+        System.assertEquals(expectedUserData.email, actualUserData.email, 'Email does not match'); 
+        System.assertEquals(expectedUserData.username, actualUserData.username, 'Username does not match'); 
+        System.assertEquals(expectedUserData.locale, actualUserData.locale, 'Locale does not match'); 
+        System.assertEquals(expectedUserData.provider, actualUserData.provider, 'Provider does not match'); 
+        System.assertEquals(expectedUserData.siteLoginUrl, actualUserData.siteLoginUrl, 'Login URL does not match'); 
     } 
 
     public class ClaytonMockHttpResponseGenerator implements HttpCalloutMock 
