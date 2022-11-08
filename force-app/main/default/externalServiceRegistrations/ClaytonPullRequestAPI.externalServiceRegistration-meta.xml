@@ -11185,6 +11185,7 @@
         }
       },
       &quot;Issue&quot;: {
+        &quot;title&quot;: &quot;Issue&quot;,
         &quot;type&quot;: &quot;object&quot;,
         &quot;properties&quot;: {
           &quot;problem_id&quot;: {
