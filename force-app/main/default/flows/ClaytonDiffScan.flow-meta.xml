@@ -404,12 +404,6 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>copado__ParentId__c</field>
-            <value>
-                <elementReference>UserStoryId</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
             <field>copado__Start_Time__c</field>
             <value>
                 <elementReference>$Flow.InterviewStartTime</elementReference>
