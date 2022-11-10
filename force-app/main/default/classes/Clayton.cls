@@ -47,7 +47,6 @@ global class Clayton extends Auth.AuthProviderPluginClass {
         pageRef.getParameters().put('code',state.queryParameters.get('code'));
         pageRef.getParameters().put('client_id',config.get(METADATA_CLIENT_ID));
         pageRef.getParameters().put('redirect_uri',getCallbackUrl(config));
-        System.debug('Token URL ' + pageRef.getUrl());
 
         Blob headerValue = Blob.valueOf(config.get(METADATA_CLIENT_ID) + ':' + config.get(METADATA_CLIENT_SECRET));
         String authorizationHeader = 'Basic ' + EncodingUtil.base64Encode(headerValue);
@@ -62,8 +61,6 @@ global class Clayton extends Auth.AuthProviderPluginClass {
         HTTPResponse res = http.send(req);
         String responseBody = res.getBody();
         
-        System.debug('Token Response Body: '+responseBody);
-        System.debug('Token Response Status: ' + res.getStatus() + ' ' + res.getStatusCode());
         final TokenResponse tokenResponse = deserializeToken(responseBody);
 
         return new Auth.AuthProviderTokenResponse(config.get(METADATA_PROVIDER_NAME)
@@ -78,7 +75,6 @@ global class Clayton extends Auth.AuthProviderPluginClass {
         pageRef.getParameters().put('refresh_token',refreshToken);
         pageRef.getParameters().put('client_id',config.get(METADATA_CLIENT_ID));
         pageRef.getParameters().put('client_secret',config.get(METADATA_CLIENT_SECRET));
-        System.debug('Refresh Token URL ' + pageRef.getUrl());
 
         HttpRequest req = new HttpRequest();
         req.setEndpoint(pageRef.getUrl());
@@ -89,8 +85,6 @@ global class Clayton extends Auth.AuthProviderPluginClass {
         HTTPResponse res = http.send(req);
         String responseBody = res.getBody();
         
-        System.debug('Refresh Token Response Body: '+responseBody);
-        System.debug('Refresh Token Response Status: ' + res.getStatus() + ' ' + res.getStatusCode());
         final TokenResponse tokenResponse = deserializeToken(responseBody);
 
         return new Auth.OAuthRefreshResult(tokenResponse.access_token, tokenResponse.refresh_token);
