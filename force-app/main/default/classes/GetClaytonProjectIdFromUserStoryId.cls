@@ -3,7 +3,7 @@ public with sharing class GetClaytonProjectIdFromUserStoryId {
     @InvocableMethod(label='GetClaytonProjectIdFromUserStoryId' description='Get Clayton Project Id from User Story Id')
     public static List<Response> GetClaytonProjectIdFromUserStoryId(List<Request> requests) {
         Request request = requests[0];
-        List<clayton__ClaytonSettings__c> claytonSettings = [select clayton__ProjectId__c from clayton__ClaytonSettings__c];
+        List<clayton__ClaytonSettings__c> claytonSettings = [select clayton__ProjectId__c from clayton__ClaytonSettings__c limit 1];
         String customSettingProjectId = claytonSettings[0].clayton__ProjectId__c;
 
         List<copado__Project__c> projects = [select Clayton_Project_Id__c from copado__Project__c where Id IN (select copado__Project__c from copado__User_Story__c where Id=:request.userStoryId) limit 1];

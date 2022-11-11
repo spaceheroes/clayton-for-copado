@@ -42,7 +42,7 @@
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <subflows>
         <name>Initialise_Scan_Context</name>
         <label>Initialise Scan Context</label>

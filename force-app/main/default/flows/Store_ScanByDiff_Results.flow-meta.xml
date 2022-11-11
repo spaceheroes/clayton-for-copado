@@ -432,7 +432,7 @@
             <targetReference>Get_Scan_Diff</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <variables>
         <name>AccountId</name>
         <dataType>String</dataType>
