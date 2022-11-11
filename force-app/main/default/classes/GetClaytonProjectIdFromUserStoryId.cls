@@ -6,7 +6,7 @@ public with sharing class GetClaytonProjectIdFromUserStoryId {
         List<clayton__ClaytonSettings__c> claytonSettings = [select clayton__ProjectId__c from clayton__ClaytonSettings__c];
         String customSettingProjectId = claytonSettings[0].clayton__ProjectId__c;
 
-        List<copado__Project__c> projects = [select Clayton_Project_Id__c from copado__Project__c where Id IN (select copado__Project__c from copado__User_Story__c where Id=:request.userStoryId)];
+        List<copado__Project__c> projects = [select Clayton_Project_Id__c from copado__Project__c where Id IN (select copado__Project__c from copado__User_Story__c where Id=:request.userStoryId) limit 1];
         copado__Project__c project = projects[0];
 
         List<Response> responses = new List<Response>();
