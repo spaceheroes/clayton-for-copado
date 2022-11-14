@@ -1,18 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
-        <name>Get_Pull_Request_Diff</name>
-        <label>Get Pull Request Diff</label>
-        <locationX>446</locationX>
-        <locationY>998</locationY>
+        <name>Get_Scan_Diff</name>
+        <label>Get Scan Diff</label>
+        <locationX>578</locationX>
+        <locationY>878</locationY>
         <actionName>clayton::ClaytonPullRequestAPI.getPullRequestDiffBranches</actionName>
         <actionType>externalService</actionType>
         <connector>
-            <targetReference>Is_PR_Completed</targetReference>
+            <targetReference>Is_Scan_Diff_Completed</targetReference>
         </connector>
-        <faultConnector>
-            <targetReference>Update_ClaytonScanJobFailed</targetReference>
-        </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>account</name>
@@ -23,7 +20,7 @@
         <inputParameters>
             <name>diff</name>
             <value>
-                <elementReference>PullRequestId</elementReference>
+                <elementReference>ClaytonScanId</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -35,14 +32,54 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <actionCalls>
-        <name>Get_PullRequest_Diff_Branches_Issues_Page</name>
-        <label>Get Pull Request Diff Branches Issues Page</label>
-        <locationX>50</locationX>
-        <locationY>1478</locationY>
+        <name>Get_Scan_Diff_Issues</name>
+        <label>Get Scan Diff Issues</label>
+        <locationX>226</locationX>
+        <locationY>1118</locationY>
         <actionName>clayton::ClaytonPullRequestAPI.getPullRequestDiffBranchesIssues</actionName>
         <actionType>externalService</actionType>
         <connector>
-            <targetReference>Assing_Issues</targetReference>
+            <targetReference>Check_Processed_Pages</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Update_Clayton_Scan_Job_Failed</targetReference>
+        </faultConnector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>account</name>
+            <value>
+                <elementReference>AccountId</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>diffId</name>
+            <value>
+                <elementReference>ClaytonScanId</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>project</name>
+            <value>
+                <elementReference>ProjectId</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>size</name>
+            <value>
+                <elementReference>PageSize</elementReference>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
+        <name>Get_Scan_Diff_Issues_Page</name>
+        <label>Get Scan Diff Issues Page</label>
+        <locationX>50</locationX>
+        <locationY>1358</locationY>
+        <actionName>clayton::ClaytonPullRequestAPI.getPullRequestDiffBranchesIssues</actionName>
+        <actionType>externalService</actionType>
+        <connector>
+            <targetReference>Add_issues</targetReference>
         </connector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
@@ -54,7 +91,7 @@
         <inputParameters>
             <name>diffId</name>
             <value>
-                <elementReference>PullRequestId</elementReference>
+                <elementReference>ClaytonScanId</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -78,51 +115,14 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <actionCalls>
-        <name>Get_PullRequest_DiffBranches_Issues</name>
-        <label>Get Pull Request Diff Branches Issues</label>
-        <locationX>226</locationX>
-        <locationY>1238</locationY>
-        <actionName>clayton::ClaytonPullRequestAPI.getPullRequestDiffBranchesIssues</actionName>
-        <actionType>externalService</actionType>
-        <connector>
-            <targetReference>Check_Processed_Pages</targetReference>
-        </connector>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
-        <inputParameters>
-            <name>account</name>
-            <value>
-                <elementReference>AccountId</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>diffId</name>
-            <value>
-                <elementReference>PullRequestId</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>project</name>
-            <value>
-                <elementReference>ProjectId</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>size</name>
-            <value>
-                <elementReference>PageSize</elementReference>
-            </value>
-        </inputParameters>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </actionCalls>
-    <actionCalls>
-        <name>TriggerScanByDiff</name>
-        <label>Trigger ScanByDiff</label>
-        <locationX>820</locationX>
+        <name>Scan_By_Diff</name>
+        <label>Scan By Diff</label>
+        <locationX>886</locationX>
         <locationY>398</locationY>
         <actionName>clayton::ClaytonScanAPI.scanByDiff</actionName>
         <actionType>externalService</actionType>
         <connector>
-            <targetReference>AssignPullRequestId</targetReference>
+            <targetReference>Create_Clayton_Scan_Job</targetReference>
         </connector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
@@ -134,7 +134,7 @@
         <inputParameters>
             <name>body</name>
             <value>
-                <elementReference>ScanByDiffForm</elementReference>
+                <elementReference>ScanByDiffInput</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -147,75 +147,15 @@
     </actionCalls>
     <apiVersion>56.0</apiVersion>
     <assignments>
-        <name>Assign_ScanByDiffInput</name>
-        <label>Assign ScanByDiff Input</label>
-        <locationX>820</locationX>
-        <locationY>278</locationY>
-        <assignmentItems>
-            <assignToReference>ScanByDiffForm.branchx5fsource</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>SourceBranch</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>ScanByDiffForm.branchx5ftarget</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>TargetBranch</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>ScanByDiffForm.housex5fkeeping</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>ScanByDiffForm.stealthx5fmode</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>TriggerScanByDiff</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>AssignPullRequestId</name>
-        <label>Assign Pull Request Id</label>
-        <locationX>820</locationX>
-        <locationY>518</locationY>
-        <assignmentItems>
-            <assignToReference>PullRequestId</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>TriggerScanByDiff.200.id</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>TaskId</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>TriggerScanByDiff.200.task.id</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Create_ClaytonScanJob</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Assing_Issues</name>
-        <label>Assing Issues</label>
+        <name>Add_issues</name>
+        <label>Add issues</label>
         <locationX>50</locationX>
-        <locationY>1598</locationY>
+        <locationY>1478</locationY>
         <assignmentItems>
             <assignToReference>TotalIssues</assignToReference>
             <operator>Add</operator>
             <value>
-                <elementReference>Get_PullRequest_Diff_Branches_Issues_Page.200.content</elementReference>
+                <elementReference>Get_Scan_Diff_Issues_Page.200.content</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -223,10 +163,63 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assign_Ids</name>
+        <label>Assign Ids</label>
+        <locationX>886</locationX>
+        <locationY>638</locationY>
+        <assignmentItems>
+            <assignToReference>ClaytonScanId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Scan_By_Diff.200.id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>WaitScanCompleted</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_ScanByDiff_Input</name>
+        <label>Assign ScanByDiff Input</label>
+        <locationX>886</locationX>
+        <locationY>278</locationY>
+        <assignmentItems>
+            <assignToReference>ScanByDiffInput.branchx5fsource</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>BaseBranch</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>ScanByDiffInput.branchx5ftarget</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>TargetBranch</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>ScanByDiffInput.housex5fkeeping</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>ScanByDiffInput.stealthx5fmode</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Scan_By_Diff</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Increase_CurrentPage</name>
-        <label>Increase CurrentPage</label>
+        <label>Increase Current Page</label>
         <locationX>50</locationX>
-        <locationY>1718</locationY>
+        <locationY>1598</locationY>
         <assignmentItems>
             <assignToReference>CurrentPage</assignToReference>
             <operator>Add</operator>
@@ -242,9 +235,9 @@
         <name>Check_Processed_Pages</name>
         <label>Check Processed Pages</label>
         <locationX>226</locationX>
-        <locationY>1358</locationY>
+        <locationY>1238</locationY>
         <defaultConnector>
-            <targetReference>Create_Static_Code_Analysis_Violations</targetReference>
+            <targetReference>Read_Clayton_Static_Code_Analysis_Record_Type</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -258,32 +251,32 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Get_PullRequest_Diff_Branches_Issues_Page</targetReference>
+                <targetReference>Get_Scan_Diff_Issues_Page</targetReference>
             </connector>
-            <label>PagesAvailable</label>
+            <label>Pages Available</label>
         </rules>
     </decisions>
     <decisions>
-        <name>Is_PR_Completed</name>
-        <label>Is Pull Request Completed</label>
-        <locationX>446</locationX>
-        <locationY>1118</locationY>
+        <name>Is_Scan_Diff_Completed</name>
+        <label>Is Scan Diff Completed</label>
+        <locationX>578</locationX>
+        <locationY>998</locationY>
         <defaultConnector>
-            <targetReference>Wait_Completed</targetReference>
+            <targetReference>WaitScanCompleted</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Success</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Get_Pull_Request_Diff.200.isx5fprocessing</leftValueReference>
+                <leftValueReference>Get_Scan_Diff.200.isx5fprocessing</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Get_PullRequest_DiffBranches_Issues</targetReference>
+                <targetReference>Get_Scan_Diff_Issues</targetReference>
             </connector>
             <label>Success</label>
         </rules>
@@ -310,29 +303,9 @@
         <expression>CASE({!Create_Static_Code_Analysis_Violations.severity}, &apos;CRITICAL&apos;, &apos;Critical&apos;, &apos;ERROR&apos;, &apos;Major&apos;,&apos;Minor&apos;)</expression>
     </formulas>
     <formulas>
-        <name>ProjectId</name>
-        <dataType>String</dataType>
-        <expression>{!$Setup.clayton__ClaytonSettings__c.clayton__ProjectId__c}</expression>
-    </formulas>
-    <formulas>
-        <name>SalesforceOrgUrl</name>
-        <dataType>String</dataType>
-        <expression>LEFT({!$Api.Partner_Server_URL_340}, FIND( &apos;/services&apos;, {!$Api.Partner_Server_URL_340}))</expression>
-    </formulas>
-    <formulas>
-        <name>SourceBranch</name>
-        <dataType>String</dataType>
-        <expression>&quot;feature/&quot;&amp;{!UserStoryName}</expression>
-    </formulas>
-    <formulas>
-        <name>TargetBranch</name>
-        <dataType>String</dataType>
-        <expression>{!$Setup.clayton__ClaytonSettings__c.clayton__TargetBranch__c}</expression>
-    </formulas>
-    <formulas>
         <name>TotalPages</name>
         <dataType>Number</dataType>
-        <expression>ROUND({!Get_PullRequest_DiffBranches_Issues.200.totalx5fpages},0)</expression>
+        <expression>ROUND({!Get_Scan_Diff_Issues.200.totalx5fpages},0)</expression>
         <scale>0</scale>
     </formulas>
     <formulas>
@@ -341,20 +314,20 @@
         <expression>{!$Setup.clayton__ClaytonSettings__c.clayton__WaitingTimeMinutes__c}</expression>
         <scale>0</scale>
     </formulas>
-    <interviewLabel>ClaytonDiffScan {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>ClaytonDiffScan</label>
+    <interviewLabel>Clayton Diff Scan {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Clayton Diff Scan</label>
     <loops>
         <name>Create_Static_Code_Analysis_Violations</name>
         <label>Create Static Code Analysis Violations</label>
         <locationX>402</locationX>
-        <locationY>1478</locationY>
+        <locationY>1598</locationY>
         <collectionReference>TotalIssues</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
             <targetReference>Create_Static_Code_Analysis_Violation</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
-            <targetReference>Update_ClaytonScanJob</targetReference>
+            <targetReference>Update_Clayton_Scan_Job</targetReference>
         </noMoreValuesConnector>
     </loops>
     <processMetadataValues>
@@ -377,13 +350,13 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordCreates>
-        <name>Create_ClaytonScanJob</name>
+        <name>Create_Clayton_Scan_Job</name>
         <label>Create Clayton Scan Job</label>
-        <locationX>820</locationX>
-        <locationY>638</locationY>
+        <locationX>886</locationX>
+        <locationY>518</locationY>
         <assignRecordIdToReference>CopadoResultId</assignRecordIdToReference>
         <connector>
-            <targetReference>Create_Static_Code_Analysis_Result</targetReference>
+            <targetReference>Assign_Ids</targetReference>
         </connector>
         <inputAssignments>
             <field>copado__Description__c</field>
@@ -394,7 +367,7 @@
         <inputAssignments>
             <field>copado__Job_Id__c</field>
             <value>
-                <elementReference>TaskId</elementReference>
+                <elementReference>Scan_By_Diff.200.task.id</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -412,7 +385,7 @@
         <inputAssignments>
             <field>copado__Status__c</field>
             <value>
-                <stringValue>Processing</stringValue>
+                <stringValue>In Progress</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -426,11 +399,10 @@
     <recordCreates>
         <name>Create_Static_Code_Analysis_Result</name>
         <label>Create Static Code Analysis Result</label>
-        <locationX>820</locationX>
-        <locationY>758</locationY>
-        <assignRecordIdToReference>StaticCodeAnalysisResultId</assignRecordIdToReference>
+        <locationX>402</locationX>
+        <locationY>1478</locationY>
         <connector>
-            <targetReference>Wait_Completed</targetReference>
+            <targetReference>Create_Static_Code_Analysis_Violations</targetReference>
         </connector>
         <inputAssignments>
             <field>RecordTypeId</field>
@@ -445,12 +417,13 @@
             </value>
         </inputAssignments>
         <object>copado__Static_Code_Analysis_Result__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
     <recordCreates>
         <name>Create_Static_Code_Analysis_Violation</name>
         <label>Create Static Code Analysis Violation</label>
         <locationX>490</locationX>
-        <locationY>1598</locationY>
+        <locationY>1718</locationY>
         <connector>
             <targetReference>Create_Static_Code_Analysis_Violations</targetReference>
         </connector>
@@ -463,7 +436,7 @@
         <inputAssignments>
             <field>copado__Info_URL__c</field>
             <value>
-                <elementReference>Create_Static_Code_Analysis_Violations.externalx5furl</elementReference>
+                <elementReference>Create_Static_Code_Analysis_Violations.detailsx5furl</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -479,27 +452,15 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>copado__Priority__c</field>
-            <value>
-                <elementReference>IssuePriority</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
             <field>copado__Rule__c</field>
             <value>
                 <elementReference>Create_Static_Code_Analysis_Violations.name</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>copado__Severity__c</field>
-            <value>
-                <elementReference>IssueSeverity</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
             <field>copado__Static_Code_Analysis_Result__c</field>
             <value>
-                <elementReference>StaticCodeAnalysisResultId</elementReference>
+                <elementReference>Create_Static_Code_Analysis_Result</elementReference>
             </value>
         </inputAssignments>
         <object>copado__Static_Code_Analysis_Violation__c</object>
@@ -508,11 +469,11 @@
     <recordLookups>
         <name>Read_Clayton_Static_Code_Analysis_Record_Type</name>
         <label>Read Clayton Static Code Analysis Record Type</label>
-        <locationX>820</locationX>
-        <locationY>158</locationY>
+        <locationX>402</locationX>
+        <locationY>1358</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Assign_ScanByDiffInput</targetReference>
+            <targetReference>Create_Static_Code_Analysis_Result</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -529,10 +490,10 @@
         </outputAssignments>
     </recordLookups>
     <recordUpdates>
-        <name>Update_ClaytonScanJob</name>
+        <name>Update_Clayton_Scan_Job</name>
         <label>Update Clayton Scan Job</label>
         <locationX>402</locationX>
-        <locationY>1814</locationY>
+        <locationY>1934</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -548,9 +509,15 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>copado__Link__c</field>
+            <value>
+                <elementReference>Get_Scan_Diff.200.htmlx5furl</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>copado__Result_Data__c</field>
             <value>
-                <elementReference>TriggerScanByDiff.200.lastx5freviewx5fresult</elementReference>
+                <elementReference>Get_Scan_Diff.200.lastx5freviewx5fresult</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -562,10 +529,10 @@
         <object>copado__Result__c</object>
     </recordUpdates>
     <recordUpdates>
-        <name>Update_ClaytonScanJobFailed</name>
-        <label>Update ClaytonScanJobFailed</label>
-        <locationX>930</locationX>
-        <locationY>1118</locationY>
+        <name>Update_Clayton_Scan_Job_Failed</name>
+        <label>Update Clayton Scan Job Failed</label>
+        <locationX>666</locationX>
+        <locationY>1238</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -575,18 +542,6 @@
             </value>
         </filters>
         <inputAssignments>
-            <field>copado__End_Time__c</field>
-            <value>
-                <elementReference>$Flow.CurrentDateTime</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>copado__Error_Code__c</field>
-            <value>
-                <elementReference>Get_Pull_Request_Diff.responseCode</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
             <field>copado__Status__c</field>
             <value>
                 <stringValue>Failed</stringValue>
@@ -595,13 +550,55 @@
         <object>copado__Result__c</object>
     </recordUpdates>
     <start>
-        <locationX>694</locationX>
+        <locationX>760</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Read_Clayton_Static_Code_Analysis_Record_Type</targetReference>
+            <targetReference>Initialise_Scan_Context</targetReference>
         </connector>
     </start>
     <status>Active</status>
+    <subflows>
+        <name>Initialise_Scan_Context</name>
+        <label>Initialise Scan Context</label>
+        <locationX>886</locationX>
+        <locationY>158</locationY>
+        <connector>
+            <targetReference>Assign_ScanByDiff_Input</targetReference>
+        </connector>
+        <flowName>Initialise_Scan_Context</flowName>
+        <inputAssignments>
+            <name>UserStoryId</name>
+            <value>
+                <elementReference>UserStoryId</elementReference>
+            </value>
+        </inputAssignments>
+        <outputAssignments>
+            <assignToReference>BaseBranch</assignToReference>
+            <name>BaseBranch</name>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>ProjectId</assignToReference>
+            <name>ProjectId</name>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>TargetBranch</assignToReference>
+            <name>TargetBranch</name>
+        </outputAssignments>
+    </subflows>
+    <variables>
+        <name>BaseBranch</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>ClaytonScanId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
     <variables>
         <name>ClaytonStaticCodeAnalysisRecordTypeId</name>
         <dataType>String</dataType>
@@ -611,13 +608,6 @@
     </variables>
     <variables>
         <name>CopadoResultId</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>CopadoStaticCodeAnalysisResult</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
@@ -642,18 +632,18 @@
         <isOutput>false</isOutput>
         <scale>0</scale>
         <value>
-            <numberValue>2.0</numberValue>
+            <numberValue>30.0</numberValue>
         </value>
     </variables>
     <variables>
-        <name>PullRequestId</name>
+        <name>ProjectId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <name>ScanByDiffForm</name>
+        <name>ScanByDiffInput</name>
         <apexClass>ExternalService__clayton__ClaytonScanAPI_ScanByDiffForm</apexClass>
         <dataType>Apex</dataType>
         <isCollection>false</isCollection>
@@ -661,36 +651,7 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <name>ScanId</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>StaticCodeAnalysisRecordTypeId</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>StaticCodeAnalysisResult</name>
-        <dataType>SObject</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>copado__Static_Code_Analysis_Result__c</objectType>
-    </variables>
-    <variables>
-        <name>StaticCodeAnalysisResultId</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>TaskId</name>
+        <name>TargetBranch</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
@@ -711,24 +672,17 @@
         <isInput>true</isInput>
         <isOutput>false</isOutput>
     </variables>
-    <variables>
-        <name>UserStoryName</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>true</isInput>
-        <isOutput>false</isOutput>
-    </variables>
     <waits>
-        <name>Wait_Completed</name>
-        <label>Wait Completed</label>
-        <locationX>820</locationX>
-        <locationY>878</locationY>
+        <name>WaitScanCompleted</name>
+        <label>Wait Scan Completed</label>
+        <locationX>886</locationX>
+        <locationY>758</locationY>
         <defaultConnectorLabel>Default Path</defaultConnectorLabel>
         <waitEvents>
             <name>Get_Resume_Time_From_Formula</name>
             <conditionLogic>and</conditionLogic>
             <connector>
-                <targetReference>Get_Pull_Request_Diff</targetReference>
+                <targetReference>Get_Scan_Diff</targetReference>
             </connector>
             <eventType>AlarmEvent</eventType>
             <inputParameters>
