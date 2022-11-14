@@ -37,8 +37,4 @@
         <recordType>copado__Static_Code_Analysis_Violation__c.Clayton</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
-    <tabSettings>
-        <tab>copado__Static_Code_Analysis_Result__c</tab>
-        <visibility>Visible</visibility>
-    </tabSettings>
 </PermissionSet>
