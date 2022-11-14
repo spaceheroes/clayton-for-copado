@@ -11215,6 +11215,9 @@
           &quot;external_url&quot;: {
             &quot;type&quot;: &quot;string&quot;
           },
+          &quot;details_url&quot;: {
+            &quot;type&quot;: &quot;string&quot;
+          },
           &quot;problem_name_singular&quot;: {
             &quot;type&quot;: &quot;string&quot;
           },

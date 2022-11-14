@@ -4,11 +4,13 @@
 
 # Salesforce cache
 .sfdx/
+.sf/
 .localdevserver/
 
 # IDEs
 .idea/
 .vscode/
+
 IlluminatedCloud/
 projectFilesBackup/
 # LWC VSCode autocomplete
