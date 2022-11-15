@@ -54,7 +54,7 @@
             <assignToReference>BaseBranch</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>feature/{!Get_User_Story.Name}</stringValue>
+                <elementReference>Get_User_Story.copado__View_in_Git__c</elementReference>
             </value>
         </assignmentItems>
     </assignments>
