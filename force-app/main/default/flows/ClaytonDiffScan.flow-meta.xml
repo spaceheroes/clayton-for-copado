@@ -452,9 +452,21 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>copado__Priority__c</field>
+            <value>
+                <elementReference>IssuePriority</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>copado__Rule__c</field>
             <value>
                 <elementReference>Create_Static_Code_Analysis_Violations.name</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>copado__Severity__c</field>
+            <value>
+                <elementReference>IssueSeverity</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
