@@ -4,8 +4,8 @@
             "path": "force-app",
             "default": true,
             "package": "Clayton for Copado",
-            "versionName": "Version 1.6.4",
-            "versionNumber": "1.6.4.NEXT",
+            "versionName": "Version 1.6.5",
+            "versionNumber": "1.6.5.NEXT",
             "dependencies": [
                 {
                     "package": "Copado Deployer@17.8.0.0"
