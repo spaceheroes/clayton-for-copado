@@ -1,4 +1,4 @@
-@RestResource(urlMapping='/webhooks/*')
+@RestResource(urlMapping='/api/webhooks/*')
 global with sharing class ClaytonWebhookRestEndpoint {
 
     @HttpPost
