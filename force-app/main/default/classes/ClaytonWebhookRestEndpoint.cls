@@ -9,30 +9,30 @@ global with sharing class ClaytonWebhookRestEndpoint {
         String requestPayload = restRequest.requestBody.toString();
 
         String signature = restRequest.headers.get('x-clayton-signature');
-        List<clayton__ClaytonSettings__c> claytonSettings = [select clayton__WebhooksSecret__c from clayton__ClaytonSettings__c limit 1];
-        String secret = claytonSettings[0].clayton__WebhooksSecret__c;
-
+        //List<clayton__ClaytonSettings__c> claytonSettings = [select clayton__WebhooksSecret__c from clayton__ClaytonSettings__c limit 1];
+        //String secret = claytonSettings[0].clayton__WebhooksSecret__c;
+        String secret = 'aaaa';
         Blob hmac = Crypto.generateMac('HMACSHA256', restRequest.requestBody, EncodingUtil.base64Decode(secret)); 
         String matchWithSignature =  EncodingUtil.convertToHex(hmac);
 
-        System.debug('Event received, event:' + webhook.action.event + ', payload:' + requestPayload + ', signature : ' + signature + ', calculated signature : ', matchWithSignature);
+        System.debug('Event received, event:' + webhook.action.event + ', payload:' + requestPayload + ', signature : ' + signature + ', calculated signature : ' + matchWithSignature);
 
         if (signature!=matchWithSignature){
             restResponse.addHeader('Content-Type', 'text/plain');
-            restResponseresponseBody = Blob.valueOf('Signature mismatch');
+            restResponse.responseBody = Blob.valueOf('Signature mismatch');
             restResponse.statusCode = 401;
             return;
         }
 
-        if (event.action.event != 'PR_READY'){
+        if (webhook.action.event != 'PR_READY'){
             restResponse.addHeader('Content-Type', 'text/plain');
-            restResponseresponseBody = Blob.valueOf('Event ' + webhook.action.event + ' not supported');
+            restResponse.responseBody = Blob.valueOf('Event ' + webhook.action.event + ' not supported');
             restResponse.statusCode = 400;
             return;
         }
 
         Map<String, Object> myMap = new Map<String, Object>();
-        myMap.put('ClaytonScanId', webhook.event.report.id);
+        myMap.put('ClaytonScanId', webhook.report.id);
         
         Flow.Interview.Save_Clayton_Diff_Analysis_Results saveClaytonDiffAnalysisResultFlow = new Flow.Interview.Save_Clayton_Diff_Analysis_Results(myMap);
         saveClaytonDiffAnalysisResultFlow.start();
