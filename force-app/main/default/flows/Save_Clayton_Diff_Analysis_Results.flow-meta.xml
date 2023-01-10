@@ -283,6 +283,7 @@
         <scale>0</scale>
     </formulas>
     <interviewLabel>Save Clayton Diff Analysis Results {!$Flow.CurrentDateTime}</interviewLabel>
+    <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
     <label>Save Clayton Diff Analysis Results</label>
     <loops>
         <name>Create_Static_Code_Analysis_Violations</name>
@@ -418,6 +419,8 @@
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>copado__Result__c</object>
+        <sortField>copado__Start_Time__c</sortField>
+        <sortOrder>Desc</sortOrder>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
