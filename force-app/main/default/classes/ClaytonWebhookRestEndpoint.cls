@@ -15,6 +15,7 @@ global with sharing class ClaytonWebhookRestEndpoint {
         final String signature = fetchSignature(restRequest);
         if (!String.isBlank(signature)){
             String calculatedSignature = calculateSignature(restRequest);
+
             if (signature!=calculatedSignature){
                 createRestResponseError(restResponse, 'Signature mismatch',401);
                 return;
@@ -22,9 +23,8 @@ global with sharing class ClaytonWebhookRestEndpoint {
         }
         if (webhook.action.event == WEBHOOK_EVENT_DIFF_READY){
             manageDiffReadyEvent(restResponse, webhook);
-            return;
         }
-        createRestResponseError(restResponse, 'Event ' + webhook.action.event + ' not supported',400);
+        restResponse.statusCode = 200;
     }
 
     @TestVisible private static Webhook fetchWebhook(final RestRequest restRequest) {
