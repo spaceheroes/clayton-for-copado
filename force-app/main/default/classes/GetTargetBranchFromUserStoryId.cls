@@ -7,11 +7,15 @@ public with sharing class GetTargetBranchFromUserStoryId {
         String customSettingsTargetBranch = String.isBlank(claytonSettings[0].TargetBranch__c) ? 'main' : claytonSettings[0].TargetBranch__c;
 
         List<copado__User_Story__c> userStories = [SELECT copado__Base_Branch__c from copado__User_Story__c where Id=:request.userStoryId LIMIT 1];
-        copado__User_Story__c userStory = userStories[0];
+        
+        if (userStories.size()>0){
+            copado__User_Story__c userStory = userStories[0];
+            customSettingsTargetBranch = String.isBlank(userStory.copado__Base_Branch__c) ? customSettingsTargetBranch : userStory.copado__Base_Branch__c;
+        }
 
         List<Response> responses = new List<Response>();
         Response response = new Response();
-        response.targetBranch = String.isBlank(userStory.copado__Base_Branch__c) ? customSettingsTargetBranch : userStory.copado__Base_Branch__c;
+        response.targetBranch = customSettingsTargetBranch;
         responses.add(response);
         return responses;
     }
