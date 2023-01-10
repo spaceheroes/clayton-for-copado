@@ -10,3 +10,32 @@ package.xml
 
 # LWC Jest
 **/__tests__/**
+
+# Named credentials
+**/default/namedCredentials/**
+
+# Profiles
+**/default/profiles/**
+
+# Custom indexes
+**/default/customindex/**
+
+# Custom metadata
+**/default/customMetadata/**
+
+# Auth Provider
+**/default/authproviders/Clayton.authprovider-meta.xml
+
+# Feature parameters
+**/default/featureParameters/**
+
+# Site
+**/SiteLoginController**
+**/SiteRegisterController**
+**/ChangePasswordController**
+**/ForgotPasswordController**
+**/MyProfilePageController**
+**/components/**
+**/default/pages/**
+**/default/sites/**
+**/default/staticresources/SiteSamples**
