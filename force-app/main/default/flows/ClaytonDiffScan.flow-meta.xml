@@ -3,15 +3,15 @@
     <actionCalls>
         <name>Scan_By_Diff</name>
         <label>Scan By Diff</label>
-        <locationX>176</locationX>
+        <locationX>182</locationX>
         <locationY>398</locationY>
         <actionName>clayton::ClaytonScanAPI.scanByDiff</actionName>
         <actionType>externalService</actionType>
         <connector>
-            <targetReference>Create_Clayton_Scan_Job</targetReference>
+            <targetReference>Check_No_Exceptions</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Update_Clayton_Scan_Job_Failed</targetReference>
+            <targetReference>Create_Clayton_Scan_Job_Failed</targetReference>
         </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
@@ -38,7 +38,7 @@
     <assignments>
         <name>Assign_ScanByDiff_Input</name>
         <label>Assign ScanByDiff Input</label>
-        <locationX>176</locationX>
+        <locationX>182</locationX>
         <locationY>278</locationY>
         <assignmentItems>
             <assignToReference>ScanByDiffInput.branchx5fsource</assignToReference>
@@ -72,6 +72,31 @@
             <targetReference>Scan_By_Diff</targetReference>
         </connector>
     </assignments>
+    <decisions>
+        <name>Check_No_Exceptions</name>
+        <label>Check No Exceptions</label>
+        <locationX>182</locationX>
+        <locationY>518</locationY>
+        <defaultConnector>
+            <targetReference>Create_Clayton_Scan_Job_Failed</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>No_Exceptions</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Scan_By_Diff.defaultExc</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Create_Clayton_Scan_Job</targetReference>
+            </connector>
+            <label>No Exceptions</label>
+        </rules>
+    </decisions>
     <formulas>
         <name>AccountId</name>
         <dataType>String</dataType>
@@ -102,8 +127,8 @@
     <recordCreates>
         <name>Create_Clayton_Scan_Job</name>
         <label>Create Clayton Scan Job</label>
-        <locationX>176</locationX>
-        <locationY>518</locationY>
+        <locationX>50</locationX>
+        <locationY>638</locationY>
         <assignRecordIdToReference>CopadoResultId</assignRecordIdToReference>
         <inputAssignments>
             <field>copado__Description__c</field>
@@ -143,29 +168,70 @@
         </inputAssignments>
         <object>copado__Result__c</object>
     </recordCreates>
-    <recordUpdates>
-        <name>Update_Clayton_Scan_Job_Failed</name>
-        <label>Update Clayton Scan Job Failed</label>
-        <locationX>440</locationX>
-        <locationY>518</locationY>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
+    <recordCreates>
+        <name>Create_Clayton_Scan_Job_Failed</name>
+        <label>Create Clayton Scan Job Failed</label>
+        <locationX>314</locationX>
+        <locationY>638</locationY>
+        <assignRecordIdToReference>CopadoResultId</assignRecordIdToReference>
+        <inputAssignments>
+            <field>copado__Description__c</field>
             <value>
-                <elementReference>CopadoResultId</elementReference>
+                <stringValue>Clayton Scan</stringValue>
             </value>
-        </filters>
+        </inputAssignments>
+        <inputAssignments>
+            <field>copado__End_Time__c</field>
+            <value>
+                <elementReference>$Flow.InterviewStartTime</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>copado__Error_Code__c</field>
+            <value>
+                <elementReference>Scan_By_Diff.responseCode</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>copado__Error_Message__c</field>
+            <value>
+                <elementReference>Scan_By_Diff.defaultExc</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>copado__Job_Id__c</field>
+            <value>
+                <elementReference>Scan_By_Diff.200.id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>copado__Job_Type__c</field>
+            <value>
+                <stringValue>Clayton Scan</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>copado__Start_Time__c</field>
+            <value>
+                <elementReference>$Flow.InterviewStartTime</elementReference>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <field>copado__Status__c</field>
             <value>
                 <stringValue>Failed</stringValue>
             </value>
         </inputAssignments>
+        <inputAssignments>
+            <field>copado__User_Story__c</field>
+            <value>
+                <elementReference>UserStoryId</elementReference>
+            </value>
+        </inputAssignments>
         <object>copado__Result__c</object>
-    </recordUpdates>
+    </recordCreates>
     <start>
-        <locationX>50</locationX>
+        <locationX>56</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Initialise_Scan_Context</targetReference>
@@ -175,7 +241,7 @@
     <subflows>
         <name>Initialise_Scan_Context</name>
         <label>Initialise Scan Context</label>
-        <locationX>176</locationX>
+        <locationX>182</locationX>
         <locationY>158</locationY>
         <connector>
             <targetReference>Assign_ScanByDiff_Input</targetReference>
@@ -220,17 +286,6 @@
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>PageSize</name>
-        <dataType>Number</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <scale>0</scale>
-        <value>
-            <numberValue>30.0</numberValue>
-        </value>
     </variables>
     <variables>
         <name>ProjectId</name>

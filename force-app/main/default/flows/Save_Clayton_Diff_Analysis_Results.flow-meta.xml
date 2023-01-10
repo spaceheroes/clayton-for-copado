@@ -10,6 +10,9 @@
         <connector>
             <targetReference>Get_Scan_Diff</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Update_Clayton_Scan_Job_Failed</targetReference>
+        </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>userStoryId</name>
@@ -32,6 +35,9 @@
         <connector>
             <targetReference>Get_Scan_Diff_Issues</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Update_Clayton_Scan_Job_Failed</targetReference>
+        </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>account</name>
@@ -104,7 +110,7 @@
             <targetReference>Add_issues</targetReference>
         </connector>
         <faultConnector>
-            <targetReference>Copy_1_of_Copy_1_of_Copy_1_of_Update_Clayton_Scan_Job_Failed</targetReference>
+            <targetReference>Update_Clayton_Scan_Job_Failed</targetReference>
         </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
@@ -160,7 +166,7 @@
         <name>Assign_Clayton_Scan_Result</name>
         <label>Assign Clayton Scan Result</label>
         <locationX>666</locationX>
-        <locationY>1454</locationY>
+        <locationY>1490</locationY>
         <assignmentItems>
             <assignToReference>Get_Result_For_Clayton_Diff_Scan.copado__Status__c</assignToReference>
             <operator>Assign</operator>
@@ -283,7 +289,6 @@
         <scale>0</scale>
     </formulas>
     <interviewLabel>Save Clayton Diff Analysis Results {!$Flow.CurrentDateTime}</interviewLabel>
-    <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
     <label>Save Clayton Diff Analysis Results</label>
     <loops>
         <name>Create_Static_Code_Analysis_Violations</name>
@@ -326,6 +331,9 @@
         <connector>
             <targetReference>Create_Static_Code_Analysis_Violations</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Update_Clayton_Scan_Job_Failed</targetReference>
+        </faultConnector>
         <inputAssignments>
             <field>RecordTypeId</field>
             <value>
@@ -349,6 +357,9 @@
         <connector>
             <targetReference>Create_Static_Code_Analysis_Violations</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Update_Clayton_Scan_Job_Failed</targetReference>
+        </faultConnector>
         <inputAssignments>
             <field>copado__File__c</field>
             <value>
@@ -409,6 +420,9 @@
         <connector>
             <targetReference>Assign_User_Story_Id</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Update_Clayton_Scan_Job_Failed</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>copado__Job_Id__c</field>
@@ -432,6 +446,9 @@
         <connector>
             <targetReference>Create_Static_Code_Analysis_Result</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Update_Clayton_Scan_Job_Failed</targetReference>
+        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Name</field>
@@ -447,30 +464,9 @@
         </outputAssignments>
     </recordLookups>
     <recordUpdates>
-        <name>Copy_1_of_Copy_1_of_Copy_1_of_Update_Clayton_Scan_Job_Failed</name>
-        <label>Copy 1 of Copy 1 of Copy 1 of Update Clayton Scan Job Failed</label>
-        <locationX>314</locationX>
-        <locationY>998</locationY>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>CopadoResultId</elementReference>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>copado__Status__c</field>
-            <value>
-                <stringValue>Failed</stringValue>
-            </value>
-        </inputAssignments>
-        <object>copado__Result__c</object>
-    </recordUpdates>
-    <recordUpdates>
         <name>Update_Clayton_Scan_Job_Failed</name>
         <label>Update Clayton Scan Job Failed</label>
-        <locationX>930</locationX>
+        <locationX>1938</locationX>
         <locationY>758</locationY>
         <filterLogic>and</filterLogic>
         <filters>
@@ -492,7 +488,10 @@
         <name>Update_Clayton_ScanJob</name>
         <label>Update Clayton Scan Job</label>
         <locationX>666</locationX>
-        <locationY>1574</locationY>
+        <locationY>1610</locationY>
+        <faultConnector>
+            <targetReference>Update_Clayton_Scan_Job_Failed</targetReference>
+        </faultConnector>
         <inputReference>Get_Result_For_Clayton_Diff_Scan</inputReference>
     </recordUpdates>
     <start>
