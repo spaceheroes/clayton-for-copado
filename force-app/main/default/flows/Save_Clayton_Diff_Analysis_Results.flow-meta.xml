@@ -4,7 +4,7 @@
         <name>Get_Project_Id</name>
         <label>Get Project Id</label>
         <locationX>358</locationX>
-        <locationY>398</locationY>
+        <locationY>614</locationY>
         <actionName>GetClaytonProjectIdFromUserStoryId</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -29,7 +29,7 @@
         <name>Get_Scan_Diff</name>
         <label>Get Scan Diff</label>
         <locationX>358</locationX>
-        <locationY>518</locationY>
+        <locationY>734</locationY>
         <actionName>clayton::ClaytonPullRequestAPI.getPullRequestDiffBranches</actionName>
         <actionType>externalService</actionType>
         <connector>
@@ -63,7 +63,7 @@
         <name>Get_Scan_Diff_Issues</name>
         <label>Get Scan Diff Issues</label>
         <locationX>358</locationX>
-        <locationY>638</locationY>
+        <locationY>854</locationY>
         <actionName>clayton::ClaytonPullRequestAPI.getPullRequestDiffBranchesIssues</actionName>
         <actionType>externalService</actionType>
         <connector>
@@ -103,7 +103,7 @@
         <name>Get_Scan_Diff_Issues_Page</name>
         <label>Get Scan Diff Issues Page</label>
         <locationX>50</locationX>
-        <locationY>878</locationY>
+        <locationY>1094</locationY>
         <actionName>clayton::ClaytonPullRequestAPI.getPullRequestDiffBranchesIssues</actionName>
         <actionType>externalService</actionType>
         <connector>
@@ -150,7 +150,7 @@
         <name>Add_issues</name>
         <label>Add issues</label>
         <locationX>50</locationX>
-        <locationY>998</locationY>
+        <locationY>1214</locationY>
         <assignmentItems>
             <assignToReference>TotalIssues</assignToReference>
             <operator>Add</operator>
@@ -166,7 +166,7 @@
         <name>Assign_Clayton_Scan_Result</name>
         <label>Assign Clayton Scan Result</label>
         <locationX>666</locationX>
-        <locationY>1490</locationY>
+        <locationY>1706</locationY>
         <assignmentItems>
             <assignToReference>Get_Result_For_Clayton_Diff_Scan.copado__Status__c</assignToReference>
             <operator>Assign</operator>
@@ -203,7 +203,7 @@
         <name>Assign_User_Story_Id</name>
         <label>Assign User Story Id</label>
         <locationX>358</locationX>
-        <locationY>278</locationY>
+        <locationY>494</locationY>
         <assignmentItems>
             <assignToReference>UserStoryId</assignToReference>
             <operator>Assign</operator>
@@ -219,7 +219,7 @@
         <name>Increase_CurrentPage</name>
         <label>Increase Current Page</label>
         <locationX>50</locationX>
-        <locationY>1118</locationY>
+        <locationY>1334</locationY>
         <assignmentItems>
             <assignToReference>CurrentPage</assignToReference>
             <operator>Add</operator>
@@ -235,7 +235,7 @@
         <name>Check_Processed_Pages</name>
         <label>Check Processed Pages</label>
         <locationX>358</locationX>
-        <locationY>758</locationY>
+        <locationY>974</locationY>
         <defaultConnector>
             <targetReference>Read_Clayton_Static_Code_Analysis_Record_Type</targetReference>
         </defaultConnector>
@@ -283,13 +283,18 @@
         <expression>ROUND({!Get_Scan_Diff_Issues.200.totalx5fpages},0)</expression>
         <scale>0</scale>
     </formulas>
+    <formulas>
+        <name>WaitingTimeViolationsStorage</name>
+        <dataType>DateTime</dataType>
+        <expression>{!$Flow.CurrentDateTime} + 1/1440</expression>
+    </formulas>
     <interviewLabel>Save Clayton Diff Analysis Results {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Save Clayton Diff Analysis Results</label>
     <loops>
         <name>Create_Static_Code_Analysis_Violations</name>
         <label>Create Static Code Analysis Violations</label>
         <locationX>666</locationX>
-        <locationY>1118</locationY>
+        <locationY>1334</locationY>
         <collectionReference>TotalIssues</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -322,7 +327,7 @@
         <name>Create_Static_Code_Analysis_Result</name>
         <label>Create Static Code Analysis Result</label>
         <locationX>666</locationX>
-        <locationY>998</locationY>
+        <locationY>1214</locationY>
         <connector>
             <targetReference>Create_Static_Code_Analysis_Violations</targetReference>
         </connector>
@@ -348,7 +353,7 @@
         <name>Create_Static_Code_Analysis_Violation</name>
         <label>Create Static Code Analysis Violation</label>
         <locationX>754</locationX>
-        <locationY>1238</locationY>
+        <locationY>1454</locationY>
         <connector>
             <targetReference>Create_Static_Code_Analysis_Violations</targetReference>
         </connector>
@@ -410,7 +415,7 @@
         <name>Get_Result_For_Clayton_Diff_Scan</name>
         <label>Get Result For Clayton Diff Scan</label>
         <locationX>358</locationX>
-        <locationY>158</locationY>
+        <locationY>374</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Assign_User_Story_Id</targetReference>
@@ -436,7 +441,7 @@
         <name>Read_Clayton_Static_Code_Analysis_Record_Type</name>
         <label>Read Clayton Static Code Analysis Record Type</label>
         <locationX>666</locationX>
-        <locationY>878</locationY>
+        <locationY>1094</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Create_Static_Code_Analysis_Result</targetReference>
@@ -462,7 +467,7 @@
         <name>Update_Clayton_Scan_Job_Failed</name>
         <label>Update Clayton Scan Job Failed</label>
         <locationX>1938</locationX>
-        <locationY>758</locationY>
+        <locationY>974</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -483,7 +488,7 @@
         <name>Update_Clayton_ScanJob</name>
         <label>Update Clayton Scan Job</label>
         <locationX>666</locationX>
-        <locationY>1610</locationY>
+        <locationY>1826</locationY>
         <faultConnector>
             <targetReference>Update_Clayton_Scan_Job_Failed</targetReference>
         </faultConnector>
@@ -493,7 +498,7 @@
         <locationX>232</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Get_Result_For_Clayton_Diff_Scan</targetReference>
+            <targetReference>Wait_for_violations_stored</targetReference>
         </connector>
     </start>
     <status>Active</status>
@@ -577,4 +582,41 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
+    <waits>
+        <name>Wait_for_violations_stored</name>
+        <label>Wait for violations stored</label>
+        <locationX>358</locationX>
+        <locationY>158</locationY>
+        <defaultConnector>
+            <targetReference>Get_Result_For_Clayton_Diff_Scan</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Path</defaultConnectorLabel>
+        <waitEvents>
+            <name>Pause</name>
+            <conditionLogic>and</conditionLogic>
+            <connector>
+                <targetReference>Get_Result_For_Clayton_Diff_Scan</targetReference>
+            </connector>
+            <eventType>AlarmEvent</eventType>
+            <inputParameters>
+                <name>AlarmTime</name>
+                <value>
+                    <elementReference>WaitingTimeViolationsStorage</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>TimeOffset</name>
+                <value>
+                    <numberValue>0.0</numberValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>TimeOffsetUnit</name>
+                <value>
+                    <stringValue>Hours</stringValue>
+                </value>
+            </inputParameters>
+            <label>Pause</label>
+        </waitEvents>
+    </waits>
 </Flow>
