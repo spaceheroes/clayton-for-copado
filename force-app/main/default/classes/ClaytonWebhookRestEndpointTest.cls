@@ -87,6 +87,10 @@ public class ClaytonWebhookRestEndpointTest {
         webhook.action.event = 'DIFF_READY';
         webhook.report = new ClaytonWebhookRestEndpoint.PullRequestReviewReport();
         webhook.report.pull_request_id = pullRequestId;
+        webhook.workspace = new ClaytonWebhookRestEndpoint.Workspace();
+        webhook.workspace.id = accountId;
+        webhook.project = new ClaytonWebhookRestEndpoint.Project();
+        webhook.project.id = projectId;
         copado__Project__c project = new copado__Project__c();
         project.Clayton_Project_Id__c = projectId;
         insert project;

@@ -37,6 +37,8 @@
         <object>copado__User_Story_Commit__c</object>
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <scheduledPaths>
+            <name>AsyncStep</name>
+            <pathType>AsyncAfterCommit</pathType>
             <connector>
                 <targetReference>Clayton_Diff_Scan</targetReference>
             </connector>
