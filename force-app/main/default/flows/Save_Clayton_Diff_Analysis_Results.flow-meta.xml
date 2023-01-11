@@ -257,11 +257,6 @@
         </rules>
     </decisions>
     <formulas>
-        <name>AccountId</name>
-        <dataType>String</dataType>
-        <expression>{!$Setup.clayton__ClaytonSettings__c.clayton__AccountId__c}</expression>
-    </formulas>
-    <formulas>
         <name>IssueMessage</name>
         <dataType>String</dataType>
         <expression>LEFT({!Create_Static_Code_Analysis_Violations.commentx5fbody}, 255)</expression>
@@ -503,6 +498,13 @@
     </start>
     <status>Active</status>
     <variables>
+        <name>AccountId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
         <name>ClaytonScanId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
@@ -549,7 +551,7 @@
         <name>ProjectId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
-        <isInput>false</isInput>
+        <isInput>true</isInput>
         <isOutput>false</isOutput>
     </variables>
     <variables>

@@ -25,19 +25,30 @@
     <start>
         <locationX>50</locationX>
         <locationY>0</locationY>
-        <connector>
-            <targetReference>Clayton_Diff_Scan</targetReference>
-        </connector>
+        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>IsDeleted</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
         <object>copado__User_Story_Commit__c</object>
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <scheduledPaths>
+            <connector>
+                <targetReference>Clayton_Diff_Scan</targetReference>
+            </connector>
+        </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
     <status>Active</status>
     <subflows>
         <name>Clayton_Diff_Scan</name>
         <label>Clayton Diff Scan</label>
-        <locationX>176</locationX>
-        <locationY>335</locationY>
+        <locationX>308</locationX>
+        <locationY>288</locationY>
         <flowName>ClaytonDiffScan</flowName>
         <inputAssignments>
             <name>UserStoryId</name>

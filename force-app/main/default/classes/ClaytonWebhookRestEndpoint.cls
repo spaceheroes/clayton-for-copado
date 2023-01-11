@@ -45,6 +45,8 @@ global with sharing class ClaytonWebhookRestEndpoint {
 
     @TestVisible private static void manageDiffReadyEvent(final RestResponse restResponse, final Webhook webhook){
         final Map<String, Object> myMap = new Map<String, Object>();
+        myMap.put('AccountId', webhook.workspace.id);
+        myMap.put('ProjectId', webhook.project.id);
         myMap.put('ClaytonScanId', webhook.report.pull_request_id);
        
         try {
