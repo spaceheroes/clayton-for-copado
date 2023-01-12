@@ -50,6 +50,13 @@ global with sharing class ClaytonWebhookRestEndpoint {
         myMap.put('ClaytonScanId', webhook.report.pull_request_id);
        
         try {
+            //sleep for 10s
+            Long startTime = DateTime.now().getTime();
+            Long finishTime = DateTime.now().getTime();
+            while ((finishTime - startTime) < 10000) {
+                finishTime = DateTime.now().getTime();
+            }
+
             final Flow.Interview.Save_Clayton_Diff_Analysis_Results saveClaytonDiffAnalysisResultFlow = new Flow.Interview.Save_Clayton_Diff_Analysis_Results(myMap);
             saveClaytonDiffAnalysisResultFlow.start();
         } catch(Exception e) {
