@@ -11,6 +11,7 @@
             <targetReference>Get_Scan_Diff</targetReference>
         </connector>
         <faultConnector>
+            <isGoTo>true</isGoTo>
             <targetReference>Update_Clayton_Scan_Job_Failed</targetReference>
         </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -36,6 +37,7 @@
             <targetReference>Get_Scan_Diff_Issues</targetReference>
         </connector>
         <faultConnector>
+            <isGoTo>true</isGoTo>
             <targetReference>Update_Clayton_Scan_Job_Failed</targetReference>
         </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -110,6 +112,7 @@
             <targetReference>Add_issues</targetReference>
         </connector>
         <faultConnector>
+            <isGoTo>true</isGoTo>
             <targetReference>Update_Clayton_Scan_Job_Failed</targetReference>
         </faultConnector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -228,6 +231,7 @@
             </value>
         </assignmentItems>
         <connector>
+            <isGoTo>true</isGoTo>
             <targetReference>Check_Processed_Pages</targetReference>
         </connector>
     </assignments>
@@ -256,6 +260,7 @@
             <label>Pages Available</label>
         </rules>
     </decisions>
+    <environments>Default</environments>
     <formulas>
         <name>IssueMessage</name>
         <dataType>String</dataType>
@@ -332,6 +337,7 @@
             <targetReference>Create_Static_Code_Analysis_Violations</targetReference>
         </connector>
         <faultConnector>
+            <isGoTo>true</isGoTo>
             <targetReference>Update_Clayton_Scan_Job_Failed</targetReference>
         </faultConnector>
         <inputAssignments>
@@ -358,6 +364,7 @@
             <targetReference>Create_Static_Code_Analysis_Violations</targetReference>
         </connector>
         <faultConnector>
+            <isGoTo>true</isGoTo>
             <targetReference>Update_Clayton_Scan_Job_Failed</targetReference>
         </faultConnector>
         <inputAssignments>
@@ -415,14 +422,11 @@
         <name>Get_Result_For_Clayton_Diff_Scan</name>
         <label>Get Result For Clayton Diff Scan</label>
         <locationX>358</locationX>
-        <locationY>374</locationY>
+        <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Assign_User_Story_Id</targetReference>
+            <targetReference>Wait_for_violations_stored</targetReference>
         </connector>
-        <faultConnector>
-            <targetReference>Update_Clayton_Scan_Job_Failed</targetReference>
-        </faultConnector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>copado__Job_Id__c</field>
@@ -447,6 +451,7 @@
             <targetReference>Create_Static_Code_Analysis_Result</targetReference>
         </connector>
         <faultConnector>
+            <isGoTo>true</isGoTo>
             <targetReference>Update_Clayton_Scan_Job_Failed</targetReference>
         </faultConnector>
         <filterLogic>and</filterLogic>
@@ -490,6 +495,7 @@
         <locationX>666</locationX>
         <locationY>1826</locationY>
         <faultConnector>
+            <isGoTo>true</isGoTo>
             <targetReference>Update_Clayton_Scan_Job_Failed</targetReference>
         </faultConnector>
         <inputReference>Get_Result_For_Clayton_Diff_Scan</inputReference>
@@ -498,7 +504,7 @@
         <locationX>232</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Wait_for_violations_stored</targetReference>
+            <targetReference>Get_Result_For_Clayton_Diff_Scan</targetReference>
         </connector>
     </start>
     <status>Active</status>
@@ -586,16 +592,16 @@
         <name>Wait_for_violations_stored</name>
         <label>Wait for violations stored</label>
         <locationX>358</locationX>
-        <locationY>158</locationY>
+        <locationY>278</locationY>
         <defaultConnector>
-            <targetReference>Get_Result_For_Clayton_Diff_Scan</targetReference>
+            <targetReference>Assign_User_Story_Id</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Path</defaultConnectorLabel>
         <waitEvents>
             <name>Pause</name>
             <conditionLogic>and</conditionLogic>
             <connector>
-                <targetReference>Get_Result_For_Clayton_Diff_Scan</targetReference>
+                <targetReference>Assign_User_Story_Id</targetReference>
             </connector>
             <eventType>AlarmEvent</eventType>
             <inputParameters>
