@@ -5,16 +5,12 @@ public class GetTargetBranchFromUserStoryIdTest {
     public static void testReadFromUserStory() {
 
         // Given
-        String targetBranch = 'dev';
-        clayton__ClaytonSettings__c customSettings = new clayton__ClaytonSettings__c();
-        customSettings.TargetBranch__c = 'main';
-        customSettings.clayton__ProjectId__c='123';
-        customSettings.clayton__AccountId__c='123';
-        insert customSettings;
-        copado__User_Story__c userStory = new copado__User_Story__c();
-        userStory.copado__Base_Branch__c = targetBranch;
-        insert userStory;
-
+        String accountId = '123';
+        String projectId = '456';
+        String targetBranch = 'main';
+        String userStoryTargetBranch = 'dev';
+        clayton__ClaytonSettings__c customSettings = TestDataFactory.createClaytonSettingsWithAccountProjectAndTargetBranch(accountId,projectId, targetBranch);
+        copado__User_Story__c userStory = TestDataFactory.createCopadoUserStoryWithBaseBranch(userStoryTargetBranch);
 
         List<GetTargetBranchFromUserStoryId.Request> requests = new List<GetTargetBranchFromUserStoryId.Request>();
         GetTargetBranchFromUserStoryId.Request request = new GetTargetBranchFromUserStoryId.Request();
@@ -26,7 +22,7 @@ public class GetTargetBranchFromUserStoryIdTest {
 
         // Then
         GetTargetBranchFromUserStoryId.Response response = responses[0];
-        System.assertEquals(response.targetBranch, targetBranch, 'Target branch read from user story');
+        System.assertEquals(response.targetBranch, userStoryTargetBranch, 'Target branch read from user story');
     }
 
     @isTest
@@ -38,7 +34,6 @@ public class GetTargetBranchFromUserStoryIdTest {
         String projectId = '456';
         clayton__ClaytonSettings__c customSettings = TestDataFactory.createClaytonSettingsWithAccountProjectAndTargetBranch(accountId,projectId, targetBranch);
         copado__User_Story__c userStory = TestDataFactory.createCopadoUserStoryWithBaseBranch('');
-
 
         List<GetTargetBranchFromUserStoryId.Request> requests = new List<GetTargetBranchFromUserStoryId.Request>();
         GetTargetBranchFromUserStoryId.Request request = new GetTargetBranchFromUserStoryId.Request();
@@ -62,7 +57,6 @@ public class GetTargetBranchFromUserStoryIdTest {
         String projectId = '456';
         clayton__ClaytonSettings__c customSettings = TestDataFactory.createClaytonSettingsWithAccountProjectAndTargetBranch(accountId,projectId, '');
         copado__User_Story__c userStory = TestDataFactory.createCopadoUserStoryWithBaseBranch('');
-
 
         List<GetTargetBranchFromUserStoryId.Request> requests = new List<GetTargetBranchFromUserStoryId.Request>();
         GetTargetBranchFromUserStoryId.Request request = new GetTargetBranchFromUserStoryId.Request();
