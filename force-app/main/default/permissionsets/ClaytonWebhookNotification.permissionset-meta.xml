@@ -1,5 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <classAccesses>
+        <apexClass>ClaytonWebhookRestEndpoint</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>GetClaytonProjectIdFromUserStoryId</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>GetTargetBranchFromUserStoryId</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <description>Allows access to the Clayton for Copado integration objects while receiving Webhook notifications.</description>
     <fieldPermissions>
         <editable>false</editable>
         <field>copado__Static_Code_Analysis_Violation__c.copado__File__c</field>
