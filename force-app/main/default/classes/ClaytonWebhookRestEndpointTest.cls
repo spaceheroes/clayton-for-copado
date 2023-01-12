@@ -44,11 +44,7 @@ public class ClaytonWebhookRestEndpointTest {
         String projectId = '12345678910';
         String accountId = '12345678911';
         restRequest.requestBody = Blob.valueOf('{"action":{"event":"'+event+'"},"workspace":{"id":"'+accountId+'","name":"Clayton"},"project":{"id":"'+projectId+'","name":"CopadoTrial"},"report":{"id":"ab55e9d3-f3c0-4701-8014-14594da499d5","pull_request_id":"'+pullRequestId+'","result":"PASSED","html_url":"https://staging.claytonapp.com/preview/repositories/'+projectId+'/diffs-issues/5c0f4eff-4ad9-4942-8232-5daf0978df18"}}');
-        clayton__ClaytonSettings__c customSettings = new clayton__ClaytonSettings__c();
-        customSettings.clayton__AccountId__c= accountId;
-        customSettings.clayton__ProjectId__c= projectId;
-        customSettings.clayton__WebhookSecret__c = secretKey;
-        insert customSettings;
+        clayton__ClaytonSettings__c customSettings = TestDataFactory.createClaytonSettingsWithAccountProjectAndWebhookSecret(accountId, projectId, secretKey);
 
         // When
         String calculatedSignature = ClaytonWebhookRestEndpoint.calculateSignature(restRequest);
@@ -82,15 +78,6 @@ public class ClaytonWebhookRestEndpointTest {
         String pullRequestId = '345234243234';
         String projectId = '12345678910';
         String accountId = '12345678911';
-        ClaytonWebhookRestEndpoint.Webhook webhook = new ClaytonWebhookRestEndpoint.Webhook();
-        webhook.action = new ClaytonWebhookRestEndpoint.Action();
-        webhook.action.event = 'DIFF_READY';
-        webhook.report = new ClaytonWebhookRestEndpoint.PullRequestReviewReport();
-        webhook.report.pull_request_id = pullRequestId;
-        webhook.workspace = new ClaytonWebhookRestEndpoint.Workspace();
-        webhook.workspace.id = accountId;
-        webhook.project = new ClaytonWebhookRestEndpoint.Project();
-        webhook.project.id = projectId;
         copado__Project__c project = new copado__Project__c();
         project.Clayton_Project_Id__c = projectId;
         insert project;
@@ -114,10 +101,8 @@ public class ClaytonWebhookRestEndpointTest {
         Test.setMock(HttpCalloutMock.class, mock);
 
         // When
-        ClaytonWebhookRestEndpoint.manageDiffReadyEvent(restResponse, webhook);
+        ClaytonWebhookRestEndpoint.manageDiffReadyEvent(accountId, projectId, pullRequestId);
 
-        // Then
-        System.assertEquals(statusCode, restResponse.statusCode, 'Status code must match');
     }
 
     @isTest

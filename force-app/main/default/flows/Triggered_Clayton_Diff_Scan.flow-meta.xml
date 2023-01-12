@@ -1,6 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>56.0</apiVersion>
+    <decisions>
+        <name>Is_Trigger_Automatic_Scans_Enabled</name>
+        <label>Is Trigger Automatic Scans Enabled</label>
+        <locationX>374</locationX>
+        <locationY>288</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Is_Enabled</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>TriggerAutomaticScans</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Clayton_Diff_Scan</targetReference>
+            </connector>
+            <label>Is Enabled</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
+    <formulas>
+        <name>TriggerAutomaticScans</name>
+        <dataType>Boolean</dataType>
+        <expression>{!$Setup.clayton__ClaytonSettings__c.clayton__Trigger_Automatic_Scans__c}</expression>
+    </formulas>
     <interviewLabel>Clayton Diff Scan {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Triggered Clayton Diff Scan</label>
     <processMetadataValues>
@@ -37,11 +65,10 @@
         <object>copado__User_Story_Commit__c</object>
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <scheduledPaths>
-            <name>AsyncStep</name>
-            <pathType>AsyncAfterCommit</pathType>
             <connector>
-                <targetReference>Clayton_Diff_Scan</targetReference>
+                <targetReference>Is_Trigger_Automatic_Scans_Enabled</targetReference>
             </connector>
+            <pathType>AsyncAfterCommit</pathType>
         </scheduledPaths>
         <triggerType>RecordAfterSave</triggerType>
     </start>
@@ -49,8 +76,8 @@
     <subflows>
         <name>Clayton_Diff_Scan</name>
         <label>Clayton Diff Scan</label>
-        <locationX>308</locationX>
-        <locationY>288</locationY>
+        <locationX>242</locationX>
+        <locationY>408</locationY>
         <flowName>ClaytonDiffScan</flowName>
         <inputAssignments>
             <name>UserStoryId</name>

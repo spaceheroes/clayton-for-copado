@@ -3,7 +3,7 @@
     <fullName>AccountId__c</fullName>
     <description>Clayton Account Id</description>
     <externalId>true</externalId>
-    <label>AccountId</label>
+    <label>Account Id</label>
     <length>255</length>
     <required>true</required>
     <trackTrending>false</trackTrending>

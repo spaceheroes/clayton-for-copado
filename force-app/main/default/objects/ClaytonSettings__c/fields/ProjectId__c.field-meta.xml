@@ -3,7 +3,7 @@
     <fullName>ProjectId__c</fullName>
     <description>Clayton Project Id</description>
     <externalId>true</externalId>
-    <label>ProjectId</label>
+    <label>Project Id</label>
     <length>255</length>
     <required>true</required>
     <trackTrending>false</trackTrending>

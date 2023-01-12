@@ -22,7 +22,7 @@ global with sharing class ClaytonWebhookRestEndpoint {
             }
         }
         if (webhook.action.event == WEBHOOK_EVENT_DIFF_READY){
-            manageDiffReadyEvent(restResponse, webhook);
+            manageDiffReadyEvent(webhook.workspace.id, webhook.project.id, webhook.report.pull_request_id);
         }
         restResponse.statusCode = 200;
     }
@@ -43,27 +43,20 @@ global with sharing class ClaytonWebhookRestEndpoint {
         return EncodingUtil.convertToHex(hmac);
     }
 
-    @TestVisible private static void manageDiffReadyEvent(final RestResponse restResponse, final Webhook webhook){
+    @future(callout=true)
+    @TestVisible private static void manageDiffReadyEvent(final String accountId, final String projectId, final String claytonScanId){
         final Map<String, Object> myMap = new Map<String, Object>();
-        myMap.put('AccountId', webhook.workspace.id);
-        myMap.put('ProjectId', webhook.project.id);
-        myMap.put('ClaytonScanId', webhook.report.pull_request_id);
+        myMap.put('AccountId', accountId);
+        myMap.put('ProjectId', projectId);
+        myMap.put('ClaytonScanId', claytonScanId);
        
         try {
-            //sleep for 10s
-            Long startTime = DateTime.now().getTime();
-            Long finishTime = DateTime.now().getTime();
-            while ((finishTime - startTime) < 10000) {
-                finishTime = DateTime.now().getTime();
-            }
-
-            final Flow.Interview.Save_Clayton_Diff_Analysis_Results saveClaytonDiffAnalysisResultFlow = new Flow.Interview.Save_Clayton_Diff_Analysis_Results(myMap);
+            final Flow.Interview.clayton.Save_Clayton_Diff_Analysis_Results saveClaytonDiffAnalysisResultFlow = new Flow.Interview.clayton.Save_Clayton_Diff_Analysis_Results(myMap);
             saveClaytonDiffAnalysisResultFlow.start();
         } catch(Exception e) {
             System.debug('Unable to trigger flow: ' + e.getMessage());
         }
 
-        restResponse.statusCode = 200;
     }
 
     @TestVisible private static void createRestResponseError(final RestResponse RestResponse, final String errorMessage, final Integer statusCode) {
