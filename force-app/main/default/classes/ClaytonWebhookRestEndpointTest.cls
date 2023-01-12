@@ -78,22 +78,11 @@ public class ClaytonWebhookRestEndpointTest {
         String pullRequestId = '345234243234';
         String projectId = '12345678910';
         String accountId = '12345678911';
-        copado__Project__c project = new copado__Project__c();
-        project.Clayton_Project_Id__c = projectId;
-        insert project;
-        copado__User_Story__c userStory = new copado__User_Story__c();
-        userStory.copado__Project__c = project.Id;
-        insert userStory;
-        copado__Result__c result = new copado__Result__c();
-        result.copado__User_Story__c=userStory.Id;
-        result.copado__Job_Id__c = pullRequestId;
-        result.copado__Job_Type__c = 'Clayton Scan';
-        result.copado__Description__c = 'Clayton Scan';
-        result.copado__Status__c = 'In Progress';
-        insert result;
-        clayton__ClaytonSettings__c customSettings = new clayton__ClaytonSettings__c();
-        customSettings.clayton__AccountId__c= accountId;
-        customSettings.clayton__ProjectId__c= projectId;
+        clayton__ClaytonSettings__c customSettings = TestDataFactory.createClaytonSettingsWithAccountProject(accountId, projectId);
+        copado__Project__c project = TestDataFactory.createCopadoProject(projectId);
+        copado__User_Story__c userStory = TestDataFactory.createCopadoUserStoryWithProject(project);
+        copado__Result__c result = TestDataFactory.createCopadoResult(userStory, pullRequestId);
+
         Test.startTest();
         StaticResourceCalloutMock mock = new StaticResourceCalloutMock();
         mock.setStatusCode(200);

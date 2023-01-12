@@ -16,7 +16,12 @@ public with sharing class StoreScanSarifController {
         Blob body = response.getBodyAsBlob();
         String filename = 'SARIF-'+ request.get(0).title + '.json';
         Attachment att = new Attachment(Name = filename, Body = body, ContentType = 'application/sarif+json', ParentId=request.get(0).recordId);
-        insert att;
+        try {
+            insert att;
+        } catch(Exception e){
+            System.debug('Unable to save attachment: ' + e.getMessage());
+        }
+        
     }
 
     @TestVisible
