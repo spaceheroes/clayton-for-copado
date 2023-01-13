@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>56.0</apiVersion>
+    <decisions>
+        <name>Is_Trigger_Automatic_Scans_Enabled</name>
+        <label>Is Trigger Automatic Scans Enabled</label>
+        <locationX>374</locationX>
+        <locationY>288</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Is_Enabled</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>TriggerAutomaticScans</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Clayton_Diff_Scan</targetReference>
+            </connector>
+            <label>Is Enabled</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
+    <formulas>
+        <name>TriggerAutomaticScans</name>
+        <dataType>Boolean</dataType>
+        <expression>{!$Setup.clayton__ClaytonSettings__c.clayton__Trigger_Automatic_Scans__c}</expression>
+    </formulas>
+    <interviewLabel>Clayton Diff Scan {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Triggered Clayton Diff Scan</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>IsDeleted</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <object>copado__User_Story_Commit__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <scheduledPaths>
+            <connector>
+                <targetReference>Is_Trigger_Automatic_Scans_Enabled</targetReference>
+            </connector>
+            <pathType>AsyncAfterCommit</pathType>
+        </scheduledPaths>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+    <subflows>
+        <name>Clayton_Diff_Scan</name>
+        <label>Clayton Diff Scan</label>
+        <locationX>242</locationX>
+        <locationY>408</locationY>
+        <flowName>ClaytonDiffScan</flowName>
+        <inputAssignments>
+            <name>UserStoryId</name>
+            <value>
+                <elementReference>$Record.copado__User_Story__c</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+</Flow>

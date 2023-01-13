@@ -59,6 +59,7 @@
         </assignmentItems>
     </assignments>
     <interviewLabel>Initialise Scan Context {!$Flow.CurrentDateTime}</interviewLabel>
+    <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
     <label>Initialise Scan Context</label>
     <processMetadataValues>
         <name>BuilderType</name>

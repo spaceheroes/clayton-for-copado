@@ -308,6 +308,7 @@
         <scale>0</scale>
     </formulas>
     <interviewLabel>Clayton Scan {!$Flow.CurrentDateTime}</interviewLabel>
+    <isAdditionalPermissionRequiredToRun>true</isAdditionalPermissionRequiredToRun>
     <label>Clayton Scan</label>
     <loops>
         <name>Get_Scan_Policy_Sarif_Loop</name>

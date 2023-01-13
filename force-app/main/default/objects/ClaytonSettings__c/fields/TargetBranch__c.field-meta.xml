@@ -5,7 +5,7 @@
     <description>Default target branch (e.g. master)</description>
     <externalId>false</externalId>
     <inlineHelpText>Default target branch (e.g. master)</inlineHelpText>
-    <label>TargetBranch</label>
+    <label>Target Branch</label>
     <length>255</length>
     <required>false</required>
     <trackTrending>false</trackTrending>

@@ -5,7 +5,7 @@
     <description>Clayton Scan Flow will use this number as waiting time between scan status check iterations</description>
     <externalId>false</externalId>
     <inlineHelpText>Clayton Scan Flow will use this number as waiting time between scan status check iterations</inlineHelpText>
-    <label>WaitingTimeMinutes</label>
+    <label>Polling Waiting Time (Minutes)</label>
     <precision>18</precision>
     <required>false</required>
     <scale>0</scale>
