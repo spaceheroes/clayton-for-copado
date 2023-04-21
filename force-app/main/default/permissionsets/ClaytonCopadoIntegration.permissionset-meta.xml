@@ -32,10 +32,6 @@
     </flowAccesses>
     <flowAccesses>
         <enabled>true</enabled>
-        <flow>Clayton_Scan</flow>
-    </flowAccesses>
-    <flowAccesses>
-        <enabled>true</enabled>
         <flow>Initialise_Scan_Context</flow>
     </flowAccesses>
     <flowAccesses>
